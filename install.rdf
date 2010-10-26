@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+	<!-- 
+	/* Blank Canvas Gmail Signatures [http://blankcanvas.me/gmailsignatures/]
+	 * Copyright (c) 2009, 2010 Jerome Dane <http://blankcanvas.me/contact/>  
+	 * 
+	 * This file is part of the Blank Canvas Gmail Signatures. Please see /readme.md for
+	 * more information, credits, and author requests. 
+	 * 
+	 * BC Gmail Signatures is free software: you can redistribute it and/or modify
+	 * it under the terms of the GNU General Public License as published by
+	 * the Free Software Foundation, either version 3 of the License, or
+	 * (at your option) any later version.
+	 * 
+	 * This program is distributed in the hope that it will be useful,
+	 * but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 * GNU General Public License for more details.
+	 * 
+	 * You should have received a copy of the GNU General Public License
+	 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	 */
+	 -->
+
+	<Description about="urn:mozilla:install-manifest" 
+		em:homepageURL="http://blankcanvas.me/pages/id_9/n_gmail_signatures/"
+		em:id="gmail_sigs@blankcanvasweb.com"
+		em:version="1.15.0b"
+		em:type="2"
+		em:iconURL="chrome://bcgmailsigs/skin/icon.png"
+		em:optionsURL="chrome://bcgmailsigs/content/options.xul">
+		
+		<!-- Target Application (Firefox) -->
+		<em:targetApplication>
+			<Description>
+				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> 
+				<em:minVersion>3.0</em:minVersion>
+				<em:maxVersion>4.0b8pre</em:maxVersion>
+			</Description>
+		</em:targetApplication>
+		
+		<!-- Localized Add-on Information -->
+		<em:localized>
+			<Description>
+				<em:locale>en</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Automatically inserts HTML signatures into your Gmail messages based on which address you are sending from.</em:description>
+			</Description>
+			<Description>
+				<em:locale>ar</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>اضافة العديد من تواقيع الHTML الى رسائل بريدك على ج-مايل (استبدال اضافات Greasemonkey القديمة)</em:description>
+			</Description>
+			<Description>
+				<em:locale>de</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Fügt verschiedene HTML-Signaturen in Ihre Gmail-E-Mails ein. (Ersetzt das entsprechende frühere Greasemonkey-Skript.)</em:description>
+			</Description>
+			<Description>
+				<em:locale>es</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Inserta múltiples firmas HTML en tus correos de Gmail. (Reemplaza el viejo script de Greasemonkey</em:description>
+			</Description>
+			<Description>
+				<em:locale>fr</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Insérer plusieures signatures HTML dans vos messages en Gmail. (Remplace l'ancien script Greasemonkey.)</em:description>
+			</Description>
+			<Description>
+				<em:locale>hu</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Többféle HTML aláírás beillesztése Gmail leveleidbe. (A régi Greasemonkey script felváltása.)</em:description>
+			</Description>
+			<Description>
+				<em:locale>it</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Inserisci differenti firme HTML nelle tue e-mail in Gmail. (Sostituisce il vecchio script Greasemonkey.)</em:description>
+			</Description>
+			<Description>
+				<em:locale>ko</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>지메일에서 여러 개의 HTML 서명을 사용해보세요.</em:description>
+			</Description>
+			<Description>
+				<em:locale>nl</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Insert multiple HTML signatures into your Gmail emails. (Replaces old Greasemonkey script.)</em:description>
+			</Description>
+			<Description>
+				<em:locale>pt-br</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Insere múltiplas assinaturas em HTML em seus e-mails do GMail. (Sobreescreve o antigo sript do Greasemonkey)</em:description>
+			</Description>
+			<Description>
+				<em:locale>pt-pt</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Insere múltiplas assinaturas em HTML aos seus e-mails do GMail. (Substitui o antigo script do Greasemonkey)</em:description>
+			</Description>
+			<Description>
+				<em:locale>ru</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Автоматически добавляет твою подпись к соообщениям в Gmail (Используется вместо прежнего сценария Greasemonkey)</em:description>
+			</Description>	
+			<Description>
+				<em:locale>sl</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Vstavite več podpisov v e-pošto poslano z Gmail-om (Zamenjava stare Greasemonkey scripte.)</em:description>
+			</Description>
+			<Description>
+				<em:locale>sv</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>Infoga flera HTML-signaturer i dina Gmail-brev (ersätter gammalt Greasemonkey-skript).</em:description>
+			</Description>		
+			<Description>
+				<em:locale>zh</em:locale>
+				<em:name>Blank Canvas Gmail Signatures</em:name>
+				<em:creator>Jerome Dane</em:creator>
+				<em:homepageURL>http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/</em:homepageURL>
+				<em:description>為您的Gmail電子郵件中插入多個 HTML 簽名(取代舊有的 Greasemonkey 腳本)</em:description>
+			</Description>
+		</em:localized>
+			
+	</Description>
+</RDF>

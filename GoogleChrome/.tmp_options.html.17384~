@@ -1,0 +1,104 @@
+<style type="text/css">
+	* {
+		font-family:Arial, sans-serif; font-size:small;
+	}
+</style>
+<div style="margin:2em auto; width:650; font-family:Arial, sans-serif; font-size:small;">
+	<img id="logo" style="float:left; margin:0 1em 2em 0;"/>
+	<h1 style="font-size:20px;">Blank Canvas Gmail Signatures<br/>
+		<span style="font-size:12px; font-weight:normal;">by Jerome Dane</span>
+	</h1>
+	<p style="clear:both;">Options can be found within Gmail itself by clicking on the options icon in the compose view as follows:</p>
+	<img src="http://blankcanvasweb.com/data/wysiwyg/images/page_15_123.jpg" style="border:1px solid #666;"/>
+	<div id="usefulLinks" style="margin-top:2em;">&nbsp;</div>
+</div>
+<script>
+	document.title = "Blank Canvas Gmail Signatures - Options";
+	var bcgs = {
+		getText:function(key) {
+			return chrome.i18n.getMessage(key);
+		}
+	}
+	var extensionPageUrl = 'https://chrome.google.com/extensions/detail/ijdoblggemelaimffjccmdbmodlppofd';
+	document.getElementById('logo').src = chrome.extension.getURL("chrome/skin/icon48.png")
+	try {
+		document.getElementById('usefulLinks').innerHTML = '<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td style="width:21em;" valign="top">\
+		<p style="font-size:14px; font-weight:bold">' + bcgs.getText('usefulLinks') + '</p>\
+		<style type="text/css">\
+			#bcGmailSigsLinks li { margin-bottom:.4em; }\
+			#bcGmailSigsLinks li a { text-decoration:underline; color:#0033CC; }\
+			#bcGmailSigsLinks li a:hover { text-decoration:none; }\
+		</style>\
+		<ul id="bcGmailSigsLinks">\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/" target="_blank">' +
+		bcgs.getText('projectHomePage') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_15/n_getting_started/" target="_blank">' +
+		bcgs.getText('gettingStartedGuide') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_14/n_faq/" target="_blank">' +
+		bcgs.getText('frequentlyAskedQuestions') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_12/n_html_tutorials/" target="_blank">' +
+		bcgs.getText('htmlTutorial') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_13/n_templates/" target="_blank">' +
+		bcgs.getText('signatureTemplates') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/forums/id_1/n_bc_gmail_signatures/" target="_blank">' +
+		bcgs.getText('forums') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_11/n_known_bugs/" target="_blank">' +
+		bcgs.getText('knownBugs') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_10/n_version_history/" target="_blank">' +
+		bcgs.getText('versionHistory') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_43/n_license_eula/" target="_blank">' +
+		bcgs.getText('licenseAndUserAgreement') +
+		'</a></li>\
+			<li><a href="http://blankcanvasweb.com/pages/detail/id_47/n_project_contributors/" target="_blank">' +
+		bcgs.getText('projectContributors') +
+		'</a></li>\
+		</ul>\
+	</td><td valign="top">\
+		<p><span style="font-size:14px; font-weight:bold">' +
+		bcgs.getText('promoteAndSupport') +
+		'</span></p>\
+		<p>' +
+		bcgs.getText('promoteAndSupportIntro') +
+		'</p>\
+		<p><strong>' +
+		bcgs.getText('spreadTheWord') +
+		'</strong> - ' +
+		bcgs.getText('spreadTheWordDetails') +
+		' \
+			<a href="http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/" target="_blank" style="color:#0033CC">' +
+		bcgs.getText('projectsHomePage') +
+		'</a>\
+				' +
+		bcgs.getText('wheneverPossible') +
+		'. \
+		</p>\
+		<p><strong>' +
+		bcgs.getText('writeAReview') +
+		'</strong> - ' +
+		bcgs.getText('writingAReviewOnThe') +
+		' \
+			<a href="' +
+		extensionPageUrl +
+		'" target="_blank" style="color:#0033CC">' +
+		bcgs.getText('firefoxAddonPage') +
+		'</a> \
+			' +
+		bcgs.getText('helpsLetOthersKnow') +
+		'.\
+		</p>\
+		<p><strong>' +
+		bcgs.getText('makeADonation') +
+		'</strong> - ' +
+		bcgs.getText('makeADonationDetails') +
+		'</p>\
+	</td></tr></table>';
+	} catch(e) { alert(e); }
+</script>

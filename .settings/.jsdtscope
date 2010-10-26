@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="com/jQuery/|com/BlankCanvas/" kind="src" path="chrome/content"/>
+	<classpathentry kind="src" path="chrome/content/com/BlankCanvas"/>
+	<classpathentry kind="src" path="chrome/content/com/jQuery"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+</classpath>

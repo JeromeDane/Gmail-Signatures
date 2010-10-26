@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<!--
+/* Blank Canvas Gmail Signatures [http://blankcanvas.me/gmailsignatures/]
+ * Copyright (c) 2009, 2010 Jerome Dane <http://blankcanvas.me/contact/>  
+ * 
+ * This file is part of the Blank Canvas Gmail Signatures. Please see /readme.md for
+ * more information, credits, and author requests. 
+ * 
+ * BC Gmail Signatures is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+	id="bcGmailSigsOptionsDialog" title="Blank Canvas Gmail Signatures"
+	buttons="accept"
+	>
+	<script type="application/x-javascript" src="chrome://bcgmailsigs/content/com/BlankCanvas/BrowserDetect.js"/>
+	<script type="application/x-javascript" src="chrome://bcgmailsigs/content/com/BlankCanvas/GmailSignatures.js"/>
+	<script type="application/x-javascript" src="chrome://bcgmailsigs/content/options.js"/>
+	
+	<stringbundleset>
+		<stringbundle id="string-bundle-bcGmailSigs" src="chrome://bcgmailsigs/locale/bcgmailsigs.properties"/>
+		<stringbundle id="string-bundle-bcGmailSigs-en" src="chrome://bcgmailsigs/content/bcgmailsigsdefaultLang.properties"/>
+	</stringbundleset>
+
+	<tabbox>
+		<tabs>
+			<tab id="generalTab"/>
+			<tab id="linksTab"/>
+			<tab id="debugTab"/>
+		</tabs>
+		<tabpanels>
+			<tabpanel>			
+				<vbox>
+					<label id="labelMostOptions" class="header"/>
+					<label value=" "/>
+					<image src="http://blankcanvasweb.com/data/wysiwyg/images/page_15_123.jpg" width="650"/>
+					<label value=" "/>
+				</vbox>				
+			</tabpanel>
+			<!-- ==================== links =================== -->
+			<tabpanel>
+				<vbox>
+					<label value=""/>
+					<label value="home page" id="labelHomePage" href="http://blankcanvasweb.com/pages/id_9/n_gmail_signatures/" class="text-link"/>
+					<label value="facebook page" id="labelFacebookPage" href="http://www.facebook.com/pages/Blank-Canvas-Gmail-Signatures/254402756442" class="text-link"/>
+					<label value="support" id="labelGetSupport" href="http://blankcanvasweb.com/forums/id_1/n_bc_gmail_signatures/" class="text-link"/>
+				</vbox>
+			</tabpanel>
+			<!-- ==================== debug =================== -->
+			<tabpanel>
+				<vbox>
+					<hbox>
+						<label id="labelDebugMode" class="header"/>
+						 <menulist id="debugModeOption">
+							 <menupopup>
+								 <menuitem label="" value="none" id="debugModeOptionNone"/>
+								 <menuitem label="" value="alert" id="debugModeOptionAlert"/>
+							</menupopup>
+						 </menulist>
+					</hbox>
+				</vbox>
+			</tabpanel>
+		</tabpanels>
+	</tabbox>
+
+</dialog>

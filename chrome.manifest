@@ -1,0 +1,44 @@
+# Blank Canvas Gmail Signatures [http://blankcanvas.me/gmailsignatures/]
+# Copyright (c) 2009, 2010 Jerome Dane <http://blankcanvas.me/contact/>  
+# 
+# This file is part of the Blank Canvas Gmail Signatures. Please see /readme.md for
+# more information, credits, and author requests. 
+# 
+# BC Gmail Signatures is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+content bcgmailsigs chrome/content/
+
+locale bcgmailsigs en chrome/locale/en/
+locale bcgmailsigs ar chrome/locale/ar/
+locale bcgmailsigs de chrome/locale/de/
+locale bcgmailsigs el chrome/locale/el/
+locale bcgmailsigs es chrome/locale/es/
+locale bcgmailsigs fr chrome/locale/fr/
+locale bcgmailsigs hu chrome/locale/hu/
+locale bcgmailsigs it chrome/locale/it/
+locale bcgmailsigs ko chrome/locale/ko/
+locale bcgmailsigs nl chrome/locale/nl/
+locale bcgmailsigs pt-br chrome/locale/pt-br/
+locale bcgmailsigs pt-pt chrome/locale/pt-pt/
+locale bcgmailsigs sl chrome/locale/sl/
+locale bcgmailsigs sv chrome/locale/sv/
+locale bcgmailsigs ru chrome/locale/ru/
+locale bcgmailsigs zh chrome/locale/zh/
+
+#Firefox
+overlay chrome://browser/content/browser.xul chrome://bcgmailsigs/content/overlay.xul
+skin bcgmailsigs default chrome/skin/
+
+
+

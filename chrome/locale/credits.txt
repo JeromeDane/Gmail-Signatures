@@ -1,0 +1,4 @@
+This program just went open source, so many of the credits for 
+translations still need to be added to the copyright headers
+of each file. In the meantime, see project home page for 
+translation credits.

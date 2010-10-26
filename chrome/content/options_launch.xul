@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+/* Blank Canvas Gmail Signatures [http://blankcanvas.me/gmailsignatures/]
+ * Copyright (c) 2009, 2010 Jerome Dane <http://blankcanvas.me/contact/>  
+ * 
+ * This file is part of the Blank Canvas Gmail Signatures. Please see /readme.md for
+ * more information, credits, and author requests. 
+ * 
+ * BC Gmail Signatures is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ -->
+<dialog
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  id="myDialoglaunch"
+  title="My Dialog"
+  persist="screenX screenY width height"
+  windowtype="myDialogWindowType">
+
+  <script type="application/x-javascript">
+	  var params = {inn:{name:"foo", description:"bar", enabled:true}, out:null};       
+	  window.openDialog("chrome://bcgmailsigs/content/options.xul", "",
+		"chrome, titlebar, toolbar, modal, resizable=yes", params).focus();
+	  if (params.out) {
+		// User clicked ok. Process changed arguments; e.g. write them to disk or whatever
+	  }
+	  else {
+		// User clicked cancel. Typically, nothing is done here.
+	  }
+  </script>
+  
+</dialog>
