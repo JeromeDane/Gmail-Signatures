@@ -206,23 +206,40 @@ com.BlankCanvas.GmailAPI = {
 		}
 		//-------------------------- getMainElementWrapper ----------------------------
 		this.getMainElementWrapper = function() {
+			var gmailInstance = this;
+			if(typeof(gmailInstance.numErrors) == 'undefined')
+				gmailInstance.numErrors = 0;
 			try {		
-				var gmailInstance = this;
-				if(typeof(gmailInstance.mainElementWrapper) == 'undefined') {
-					gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + div div:first div:first + div div:eq(2) + div div:first div:eq(3) + div div:first')[0];
+				if(gmailInstance.numErrors < 30 && (typeof(gmailInstance.mainElementWrapper) == 'undefined' || gmailInstance.mainElementWrapper.size() == 0)) {
+					/*
+					// The following is used during development to mark divs for easy debugging
+					// it helps find an instance of a relatively uncommon class name to use
+					// as a starting point for identifying the main element wrapper
+					gmailInstance.$('div.diLZtc').each(function(i) {
+						this.id = 'bcGmailWrapperParentTest' + i;
+					});
+					*/
+					gmailInstance.mainElementWrapper = gmailInstance.$('div.diLZtc:eq(8) div:first div:first + div div:first');
+					// check for sigs on right lab feature enabled
+					if (gmailInstance.mainElementWrapper.size() == 0)
+						gmailInstance.mainElementWrapper = gmailInstance.$('div.diLZtc:eq(6) div:first div:first + div div:first');
+					// check for older versions of Gmail 
+					if (gmailInstance.mainElementWrapper.size() == 0)
+						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + div div:first div:first + div div:eq(2) + div div:first div:eq(3) + div div:first');
 					// check for chat on right labs feature
-					if (!gmailInstance.mainElementWrapper)
-						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + table td:eq(0) + td div:first + div div:eq(2) + div div:first div:eq(3) + div div:first')[0];
+					if (gmailInstance.mainElementWrapper.size() == 0)
+						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + table td:eq(0) + td div:first + div div:eq(2) + div div:first div:eq(3) + div div:first');
 					// try for older Gmail versions
-					if(!gmailInstance.mainElementWrapper)
-						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + div div:first div:first + div + div div:eq(3) + div div:first div:eq(3) + div div:first')[0];
+					if (gmailInstance.mainElementWrapper.size() == 0)
+						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + div div:first div:first + div + div div:eq(3) + div div:first div:eq(3) + div div:first');
 					// check for chat on right labs feature in older Gmail version
-					if(!gmailInstance.mainElementWrapper)
-						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + table td:eq(0) + td + td div:first + div div:eq(3) + div div:first div:eq(3) + div div:first')[0];
-					gmailInstance.mainElementWrapper.setAttribute('id', 'bcGmailMainElementWrapper');
+					if (gmailInstance.mainElementWrapper.size() == 0)
+						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + table td:eq(0) + td + td div:first + div div:eq(3) + div div:first div:eq(3) + div div:first');
+					gmailInstance.mainElementWrapper[0].id = 'bcGmailMainElementWrapper';
 				}
-				return gmailInstance.mainElementWrapper;				
+				return gmailInstance.mainElementWrapper[0];				
 			} catch(e) {
+				gmailInstance.numErrors++;
 				gmailInstance.debug("getMainElement()\n\n" + e);
 			}
 		}
