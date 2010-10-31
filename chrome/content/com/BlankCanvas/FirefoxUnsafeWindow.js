@@ -23,7 +23,7 @@ if(!com.BlankCanvas) { com.BlankCanvas = {} }
 
 com.BlankCanvas.FirefoxUnsafeWindow = {
 	registerPageLoadListener:function(callback) {
-		var appcontent = document.getElementById("appcontent");   // browser
+		var appcontent = document.getElementById("appcontent");   // get browser browser
 		if(appcontent) {
 			appcontent.addEventListener("DOMContentLoaded", function(aEvent){
 				var unsafeWin = aEvent.target.defaultView;
