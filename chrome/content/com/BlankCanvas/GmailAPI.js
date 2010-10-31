@@ -210,7 +210,7 @@ com.BlankCanvas.GmailAPI = {
 			if(typeof(gmailInstance.numErrors) == 'undefined')
 				gmailInstance.numErrors = 0;
 			try {		
-				if(gmailInstance.numErrors < 30 && (typeof(gmailInstance.mainElementWrapper) == 'undefined' || gmailInstance.mainElementWrapper.size() == 0)) {
+				if(gmailInstance.numErrors < 10 && (typeof(gmailInstance.mainElementWrapper) == 'undefined' || gmailInstance.mainElementWrapper.size() == 0)) {
 					/*
 					// The following is used during development to mark divs for easy debugging
 					// it helps find an instance of a relatively uncommon class name to use
@@ -219,10 +219,11 @@ com.BlankCanvas.GmailAPI = {
 						this.id = 'bcGmailWrapperParentTest' + i;
 					});
 					*/
-					gmailInstance.mainElementWrapper = gmailInstance.$('div.diLZtc:eq(8) div:first div:first + div div:first');
+					var subSelectStr =  ' div:first div:first + div div:first';
+					gmailInstance.mainElementWrapper = gmailInstance.$('div.diLZtc:eq(8)' + subSelectStr);
 					// check for sigs on right lab feature enabled
 					if (gmailInstance.mainElementWrapper.size() == 0)
-						gmailInstance.mainElementWrapper = gmailInstance.$('div.diLZtc:eq(6) div:first div:first + div div:first');
+						gmailInstance.mainElementWrapper = gmailInstance.$('div.diLZtc:eq(6)' + subSelectStr);
 					// check for older versions of Gmail 
 					if (gmailInstance.mainElementWrapper.size() == 0)
 						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + div div:first div:first + div div:eq(2) + div div:first div:eq(3) + div div:first');
@@ -257,7 +258,7 @@ com.BlankCanvas.GmailAPI = {
 		//-------------------------- getMessageBoxIframe ------------------------
 		this.getMessageIframe = function() {
 			try {
-				var iframes = this.$('iframe', this.getActiveElement());
+				var iframes = this.$('form iframe', this.getActiveElement());
 				return iframes.size() > 0 ? iframes.eq(iframes.size() - 1)[0] : false;	// return last iframe
 			} catch(e) {
 				this.debug("getMessageElement()\n\n" + e);
