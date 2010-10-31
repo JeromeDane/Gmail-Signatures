@@ -328,7 +328,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 						td.innerHTML = '&nbsp;';
 					else {
 						td.setAttribute('style', 'padding:1em 0 .5em 0; font-size:12px;');
-						var html = '<strong>' + bcgs.getText('signatureHtmlCode') + ':</strong> &nbsp;&nbsp; (' + bcgs.getText('dontKnowHtml') + ' <a href="http://blankcanvasweb.com/pages/detail/id_12/n_html_tutorials/" target="_blank">' + bcgs.getText('clickHereForTutorial') + '</a>)\
+						var html = '<strong>' + bcgs.getText('signatureHtmlCode') + ':</strong> &nbsp;&nbsp; (' + bcgs.getText('dontKnowHtml') + ' <a href="http://blankcanvas.me/pages/detail/id_12/n_html_tutorials/" target="_blank">' + bcgs.getText('clickHereForTutorial') + '</a>)\
 								<textarea id="bcGmailSigsEditSig" style="width:100%; height:200px; padding:.2em; font:small Arial,sans-serif; border:1px solid #979797; margin-top:.2em;"></textarea>\
 								<div style="margin:.5em 0; text-align:right;">' +
 									getButtonHtml("bcGmailSigsSaveSigButton", bcgs.getText('saveSignature')) +
@@ -383,25 +383,30 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 								#bcGmailSigLabelOptionsWrapper input { width:6em; }\
 							</style>\
 							<div style="width:300px; float:right; text-align:right;">\
-								<a name="b_4fb6b470b9ff012db6d0000d60d4c902"></a><object type="application/x-shockwave-flash" data="https://giving.paypallabs.com/flash/badge.swf" width="205" height="350" id="badge4fb6b470b9ff012db6d0000d60d4c902" align="middle">\
-								<param name="allowScriptAccess" value="always" />\
-								<param name="allowNetworking" value="all" />\
-								<param name="movie" value="https://giving.paypallabs.com/flash/badge.swf" />\
-								<param name="quality" value="high" />\
-								<param name="bgcolor" value="#FFFFFF" />\
-								<param name="wmode" value="transparent" />\
-								<param name="FlashVars" value="Id=4fb6b470b9ff012db6d0000d60d4c902"/>\
-								<embed src="https://giving.paypallabs.com/flash/badge.swf" FlashVars="Id=4fb6b470b9ff012db6d0000d60d4c902" quality="high" bgcolor="#FFFFFF" wmode="transparent" width="205" height="350" Id="badge4fb6b470b9ff012db6d0000d60d4c902" align="middle" allowScriptAccess="always" allowNetworking="all" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>\
-								</object>\
-      							<!--<span class="bcGmailSigsCommunityButton" id="bcGmailSigsDonateButton" title="' + bcgs.getText('donateTitle') + '">\
-							       <nobr><img src="' + bcgs.images.whiteHeart + '">' + bcgs.getText('donate') + '</nobr></span>-->\
+      							<span class="bcGmailSigsCommunityButton" id="bcGmailSigsDonateButton" title="' + bcgs.getText('donateTitle') + '">\
+							       <nobr><img src="' + bcgs.images.whiteHeart + '">' + bcgs.getText('donate') + '</nobr></span>\
 								<a href="http://www.facebook.com/pages/Blank-Canvas-Gmail-Signatures/254402756442" style="margin-left:1em;" target="_blank" title="' + bcgs.getText('followBcgsOnFacebook') + '"><img src="' + bcgs.images.facebookPage + '" style="border:none; vertical-align:middle; height:30px;"/></a>\
 							</div>\
-							<a href="http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/" target="_blank">\
+							<a href="http://blankcanvas.me/gmailsignatures/" target="_blank">\
 								<img src="' + bcgs.images.bcLogo + '" align="absmiddle" style="border:none; float:left; margin-right:1em;" />\
 							</a>\
 							<div style="margin-top:10px; font-size:16px;"><strong>Blank Canvas Gmail Signatures</strong></div>\
 							<span style="font-size:11px; font-weight:normal;">' + bcgs.getText('developedBy') + ' Jerome Dane</span>\
+							<div style="width:220px; float:right; clear:left; padding-left:20px;">\
+								<p><strong>' + bcgs.getText('usefulLinks') + '</strong></p>\
+								<ul id="bcGmailSigsLinks" style="padding-left:20px;">\
+									<li><a href="http://blankcanvas.me/gmailsignatures/" target="_blank">' + bcgs.getText('projectHomePage') + '</a></li>\
+									<li><a href="http://blankcanvas.me/pages/detail/id_15/n_getting_started/" target="_blank">' + bcgs.getText('gettingStartedGuide') + '</a></li>\
+									<li><a href="http://blankcanvas.me/pages/detail/id_14/n_faq/" target="_blank">' + bcgs.getText('frequentlyAskedQuestions') + '</a></li>\
+									<li><a href="http://blankcanvas.me/pages/detail/id_12/n_html_tutorials/" target="_blank">' + bcgs.getText('htmlTutorial') + '</a></li>\
+									<li><a href="http://blankcanvas.me/pages/detail/id_13/n_templates/" target="_blank">' + bcgs.getText('signatureTemplates') + '</a></li>\
+									<li><a href="http://blankcanvas.me/forums/id_1/n_bc_gmail_signatures/" target="_blank">' + bcgs.getText('forums') + '</a></li>\
+									<li><a href="http://blankcanvas.me/pages/detail/id_11/n_known_bugs/" target="_blank">' + bcgs.getText('knownBugs') + '</a></li>\
+									<li><a href="http://blankcanvas.me/pages/detail/id_10/n_version_history/" target="_blank">' + bcgs.getText('versionHistory') + '</a></li>\
+									<li><a href="http://blankcanvas.me/pages/detail/id_43/n_license_eula/" target="_blank">' + bcgs.getText('licenseAndUserAgreement') + '</a></li>\
+									<li><a href="http://blankcanvas.me/pages/detail/id_47/n_project_contributors/" target="_blank">' + bcgs.getText('projectContributors') + '</a></li>\
+								</ul>\
+							</div>\
 							<div style="margin:3em;">\
 								<p><strong>' + bcgs.getText('signaturePosition') + '</strong>\
 									<select id="bcGmailSigsSigPositionOption">\
@@ -436,38 +441,22 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 									<input type="button" value="' + bcgs.getText('cancel') + '" id="bcGmailSigsSaveCancelButton"/>\
 								</p>\
 							</div>\
-							<table cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td style="width:21em;" valign="top">\
-								<p style="font-size:14px; font-weight:bold">' + bcgs.getText('usefulLinks') + '</p>\
-								<style type="text/css">\
-									#bcGmailSigsLinks li { margin-bottom:.4em; }\
-									#bcGmailSigsLinks li a { text-decoration:underline; color:#0033CC; }\
-									#bcGmailSigsLinks li a:hover { text-decoration:none; }\
-								</style>\
-								<ul id="bcGmailSigsLinks">\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/" target="_blank">' + bcgs.getText('projectHomePage') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_15/n_getting_started/" target="_blank">' + bcgs.getText('gettingStartedGuide') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_14/n_faq/" target="_blank">' + bcgs.getText('frequentlyAskedQuestions') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_12/n_html_tutorials/" target="_blank">' + bcgs.getText('htmlTutorial') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_13/n_templates/" target="_blank">' + bcgs.getText('signatureTemplates') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/forums/id_1/n_bc_gmail_signatures/" target="_blank">' + bcgs.getText('forums') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_11/n_known_bugs/" target="_blank">' + bcgs.getText('knownBugs') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_10/n_version_history/" target="_blank">' + bcgs.getText('versionHistory') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_43/n_license_eula/" target="_blank">' + bcgs.getText('licenseAndUserAgreement') + '</a></li>\
-									<li><a href="http://blankcanvasweb.com/pages/detail/id_47/n_project_contributors/" target="_blank">' + bcgs.getText('projectContributors') + '</a></li>\
-								</ul>\
-							</td><td valign="top">\
-								<p><span style="font-size:14px; font-weight:bold">' + bcgs.getText('promoteAndSupport') + '</span></p>\
-								<p>' + bcgs.getText('promoteAndSupportIntro') + '</p>\
-								<p><strong>' + bcgs.getText('spreadTheWord') + '</strong> - ' + bcgs.getText('spreadTheWordDetails') + ' \
-									<a href="http://blankcanvasweb.com/pages/detail/id_9/n_gmail_signatures/" target="_blank" style="color:#0033CC">' + bcgs.getText('projectsHomePage') + '</a>\
-										' + bcgs.getText('wheneverPossible') + '. \
-								</p>\
-								<p><strong>' + bcgs.getText('writeAReview') + '</strong> - ' + bcgs.getText('writingAReviewOnThe') + ' \
-									<a href="' + extensionPageUrl + '" target="_blank" style="color:#0033CC">' + bcgs.getText('firefoxAddonPage') + '</a> \
-									' + bcgs.getText('helpsLetOthersKnow') + '.\
-								</p>\
-								<p><strong>' + bcgs.getText('makeADonation') + '</strong> - ' + bcgs.getText('makeADonationDetails') + '</p>\
-							</td></tr></table>\
+							<style type="text/css">\
+								#bcGmailSigsLinks li { margin-bottom:.4em; }\
+								#bcGmailSigsLinks li a { text-decoration:underline; color:#0033CC; }\
+								#bcGmailSigsLinks li a:hover { text-decoration:none; }\
+							</style>\
+							<p><span style="font-size:14px; font-weight:bold">' + bcgs.getText('promoteAndSupport') + '</span></p>\
+							<p>' + bcgs.getText('promoteAndSupportIntro') + '</p>\
+							<p><strong>' + bcgs.getText('spreadTheWord') + '</strong> - ' + bcgs.getText('spreadTheWordDetails') + ' \
+								<a href="http://blankcanvas.me/gmailsignatures/" target="_blank" style="color:#0033CC">' + bcgs.getText('projectsHomePage') + '</a>\
+									' + bcgs.getText('wheneverPossible') + '. \
+							</p>\
+							<p><strong>' + bcgs.getText('writeAReview') + '</strong> - ' + bcgs.getText('writingAReviewOnThe') + ' \
+								<a href="' + extensionPageUrl + '" target="_blank" style="color:#0033CC">' + bcgs.getText('firefoxAddonPage') + '</a> \
+								' + bcgs.getText('helpsLetOthersKnow') + '.\
+							</p>\
+							<p><strong><a href="http://blankcanvas.me/pages/id_133/n_donate/" target="_blank">' + bcgs.getText('makeADonation') + '</a></strong> - ' + bcgs.getText('makeADonationDetails') + '</p>\
 						</div>';
 					}
 					sigInst.$(optionsWrapper).append(td);
