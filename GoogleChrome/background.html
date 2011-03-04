@@ -63,6 +63,12 @@ var localeStrings = [
 	"debugModeNone",
 	"debugModeJavascriptAlerts",
 	"saveOptions",
+	"storageMethod",
+	"storageMethodDesc",
+	"storageMethodLocalDesc",
+	"storageMethodLocal",
+	"storageMethodBrookmarkDesc",
+	"storageMethodBrookmark",
 	"cancel",
 	"getSupportHere",
 	"makeAContribution",
@@ -117,6 +123,30 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		case "openGettingStarted":
 			chrome.tabs.create({
 				"url":"http://blankcanvasweb.com/pages/id_15/n_getting_started/"
+			});
+			break;
+		case "getBookmarkFromStr":
+			chrome.bookmarks.search(request.search, function(result) {
+				if(result.length > 0)
+					sendResponse(result[0]);
+				else 
+					sendResponse(false);
+			});
+			break;
+		case "updateBookmark":
+			chrome.bookmarks.update(request.id, {
+				title:request.title
+			}, function() {
+				sendResponse();
+			});
+			break;
+		case "createBookmark":
+			chrome.bookmarks.create({
+				parentId:'2',
+				title:request.title,
+				url:request.url
+			}, function() {
+				sendResponse();
 			});
 			break;
 		default: sendResponse({}); // snub them.

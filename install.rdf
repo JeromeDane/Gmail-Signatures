@@ -25,9 +25,10 @@
 	<Description about="urn:mozilla:install-manifest" 
 		em:homepageURL="http://blankcanvas.me/pages/id_9/n_gmail_signatures/"
 		em:id="gmail_sigs@blankcanvasweb.com"
-		em:version="1.15.1"
+		em:version="1.16.0"
 		em:type="2"
 		em:iconURL="chrome://bcgmailsigs/skin/icon.png"
+		em:name="Blank Canvas Gmail Signatures"
 		em:optionsURL="chrome://bcgmailsigs/content/options.xul">
 		
 		<!-- Target Application (Firefox) -->
@@ -35,7 +36,7 @@
 			<Description>
 				<em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id> 
 				<em:minVersion>3.0</em:minVersion>
-				<em:maxVersion>4.0b8pre</em:maxVersion>
+				<em:maxVersion>4.0.*</em:maxVersion>
 			</Description>
 		</em:targetApplication>
 		

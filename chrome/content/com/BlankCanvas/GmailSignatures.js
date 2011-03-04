@@ -57,10 +57,23 @@ com.BlankCanvas.GmailSignatures = {
 					chrome.extension.sendRequest({"name":"loadLocaleText"}, function(result) {
 						bcgs.localeText = result;
 						checkDefaultText();
-					})					
+					});				
 					break;
 			}
 		} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailSignatures.init()'); }
+	},
+	bookmarkExists:function() {
+		try {
+			var bcgs = com.BlankCanvas.GmailSignatures;
+			switch(com.BlankCanvas.BrowserDetect.browser) {
+				case 'Firefox':
+					bcgs.bookmarks = com.BlankCanvas.FirefoxBookmarkManager;
+					var bookmarkArray = bcgs.bookmarks.getByUrl(bcgs.config.signatureDataBookmarkUri);
+					return bookmarkArray.length > 0 ? true : false;
+				default:
+					return null;
+			}
+		} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailSignatures.getDataBookmarkId()'); }
 	},
 	getDataBookmarkId:function() {
 		try {
@@ -85,7 +98,7 @@ com.BlankCanvas.GmailSignatures = {
 			return {};
 		}
 	},
-	getDataBookmarkObject:function() {
+	getDataBookmarkObject:function(callback) {
 		try {
 			var bcgs = com.BlankCanvas.GmailSignatures;
 			bcgs.bookmarks = com.BlankCanvas.FirefoxBookmarkManager;
@@ -93,12 +106,21 @@ com.BlankCanvas.GmailSignatures = {
 			switch(com.BlankCanvas.BrowserDetect.browser) {
 				case 'Firefox':
 					var str = bcgs.bookmarks.getTitle(bookmarkId);
-					if(typeof(str) == 'null' || !str) return {};
-					return bcgs.getSigDataFromString(str);
+					if(typeof(str) == 'null' || !str) callback({});
+					callback(bcgs.getSigDataFromString(str));
+					break;
 				default:
-					return {};
+					chrome.extension.sendRequest({"name":"getBookmarkFromStr", "search":bcgs.config.signatureDataBookmarkUri}, function(response) {
+						if(response) {
+							callback(bcgs.getSigDataFromString(response.title));
+						} else {
+							callback({});
+						}
+					});
 			}
-		} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailSignatures.getDataBookmarkObject()'); }
+		} catch(e) {
+			com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailSignatures.getDataBookmarkObject()'); 
+		}
 	},
 	formatIconButton:function(button) {
 		button.setAttribute('style', 'vertical-align:middle; margin-left:.5em; margin-top:-2px; cursor:pointer;');
@@ -155,49 +177,89 @@ com.BlankCanvas.GmailSignatures = {
 		}
 	},
 	//---------------------- getSignature -----------------
-	getSignature:function(key) {
-		function getFromBookmark() {
-			var sigContainer = bcgs.getDataBookmarkObject();
-			return typeof(sigContainer[key]) != 'undefined' ? sigContainer[key] : '';
-		}
-		
-		var bcgs = com.BlankCanvas.GmailSignatures;
-		var sig = unescape(bcgs.getPref(key));
-		sig = sig != 'null' ? sig : '';
-		if (bcgs.getPref('storageMethod') == 'bookmark' && com.BlankCanvas.BrowserDetect.browser == 'Firefox') {
-			// bookmark storage method
-			var sigFromBookmark = getFromBookmark();
-			if(sigFromBookmark != '')
-				sig = sigFromBookmark;
-			else 
-				// store the signature to the data bookmark if it exists in local storage
-				if (sig != '') { 
-					bcgs.saveSignature(sig, key);
-					bcgs.setCharPref(key, '');		// remove the local method
-				}
-		} else {
-			// local storage method
-			// store the signature from data bookmark to local storage if found
-			var sigFromBookmark = getFromBookmark();
-			if(sig == '' && sigFromBookmark != '') {
-				sig = sigFromBookmark;
-				bcgs.saveSignature(sig, key);
+	getSignature:function(key, callback) {
+		try {
+			var bcgs = com.BlankCanvas.GmailSignatures;
+			
+			function getFromBookmark(cb) {
+				bcgs.getDataBookmarkObject(function(sigContainer) {
+					cb(typeof(sigContainer[key]) != 'undefined' ? sigContainer[key] : '');
+				});
 			}
+			
+			var sig = unescape(bcgs.getPref(key));
+			sig = sig != 'null' ? sig : '';
+			if (bcgs.getPref('storageMethod') == 'bookmark') {
+				// bookmark storage method
+				getFromBookmark(function(sigFromBookmark) {
+					if(sigFromBookmark != '') {
+						sig = sigFromBookmark;
+						callback(sig);
+					} else if(sig != '') {
+						// store the signature to the data bookmark if it exists in local storage
+						bcgs.saveSignature(sig, key, callback);
+						bcgs.setCharPref(key, '');		// remove the local method
+					} else 
+						callback(sig);
+				});
+			} else {
+				// local storage method
+				// store the signature from data bookmark to local storage if found
+				if(bcgs.bookmarkExists()) {
+					getFromBookmark(function(sigFromBookmark) {
+						if(sig == '' && sigFromBookmark != '') {
+							sig = sigFromBookmark;
+							bcgs.saveSignature(sig, key, callback);
+						} else {
+							callback(sig);
+						}
+					});
+				} else
+					callback(sig);
+			}
+		} catch(e) {
+			gmailInstance.debug("getSignature()\n\n" + e); 
 		}
-		return sig;
 	},
 	//---------------------- saveSignature -----------------
-	saveSignature:function(sigKey, signature) {
+	saveSignature:function(sigKey, signature, callback) {
 		var bcgs = com.BlankCanvas.GmailSignatures;
-		if(bcgs.getPref('storageMethod') == 'bookmark' && com.BlankCanvas.BrowserDetect.browser == 'Firefox') {
-			var sigContainer = bcgs.getDataBookmarkObject();
-			//sigContainer[sigKey] = escape(signature.replace(/"/g, '\\"').replace(/\n/g, "[BCGSNL]"));
-			sigContainer[sigKey] = signature;
-			var stringifiedData = JSON.stringify(sigContainer);
-			var bookmarkId = bcgs.getDataBookmarkId();
-			com.BlankCanvas.FirefoxBookmarkManager.setTitle(bookmarkId, "BC Gmail Signatures Data: " + stringifiedData);
-		} else
+		if(bcgs.getPref('storageMethod') == 'bookmark') {
+//			if(!bcgs.getDataBookmarkId()) bcgs.();
+			bcgs.getDataBookmarkObject(function(sigContainer) {
+				//sigContainer[sigKey] = escape(signature.replace(/"/g, '\\"').replace(/\n/g, "[BCGSNL]"));
+				sigContainer[sigKey] = signature;
+				var stringifiedData = JSON.stringify(sigContainer);
+				var bookmarkId = bcgs.getDataBookmarkId();
+				switch(com.BlankCanvas.BrowserDetect.browser) {
+				case 'Firefox':
+					com.BlankCanvas.FirefoxBookmarkManager.setTitle(bookmarkId, "BC Gmail Signatures Data: " + stringifiedData);
+					callback();
+					break;
+				case 'Chrome':
+					chrome.extension.sendRequest({"name":"getBookmarkFromStr", "search":bcgs.config.signatureDataBookmarkUri }, function(response) {
+						if(response) {
+							chrome.extension.sendRequest({"name":"updateBookmark", "id":response.id, "title":"BC Gmail Signatures Data: " + stringifiedData }, function(response) {
+								callback();
+							});
+						} else {
+							chrome.extension.sendRequest({
+								"name":"createBookmark", 
+								"title":"BC Gmail Signatures Data: " + stringifiedData,  
+								"url":bcgs.config.signatureDataBookmarkUri
+							}, 
+								function(response) {
+									callback();
+							});
+						}
+					});
+					break;
+				}
+			});
+		} else {
 			bcgs.setCharPref(sigKey, escape(signature));
+			callback();
+		}
 	},
 	//---------------------- setPref -----------------
 	setCharPref:function(key, val) {

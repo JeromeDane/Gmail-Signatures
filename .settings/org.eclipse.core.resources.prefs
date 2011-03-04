@@ -1,4 +1,4 @@
-#Sun Oct 31 15:52:48 EDT 2010
+#Mon Feb 21 14:49:45 EST 2011
 eclipse.preferences.version=1
 encoding//chrome/locale/ar/bcgmailsigs.properties=UTF-8
 encoding//chrome/locale/de/bcgmailsigs.properties=UTF-8
@@ -16,4 +16,5 @@ encoding//chrome/locale/ru/bcgmailsigs.properties=UTF-8
 encoding//chrome/locale/sl/bcgmailsigs.properties=UTF-8
 encoding//chrome/locale/sv/bcgmailsigs.properties=UTF-8
 encoding//chrome/locale/zh/bcgmailsigs.properties=UTF-8
+encoding/<project>=UTF-8
 encoding/install.rdf=UTF-8

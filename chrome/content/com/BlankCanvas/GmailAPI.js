@@ -55,12 +55,13 @@ com.BlankCanvas.GmailAPI = {
 									function listenForLoadComplete(){
 										try {
 											// check for standard gmail window
-											if (canvas[0].contentDocument && jq('a[href*=/terms.html]', canvas[0].contentDocument).size() > 0) {
-												canvas = canvas[0].contentDocument;
+											if (typeof(canvas[0].contentDocument) != 'undefined' && jq('a[href*=/terms.html]', canvas[0].contentDocument).size() > 0) {
+												//canvas = canvas[0].contentDocument;
 												var gmailInstance = new com.BlankCanvas.GmailAPI.gmailInstance(unsafeWin, jq);
-												gmailInstance.document = jq('#gbar', canvas).parent().parent().parent().parent().parent().parent()[0];
+												gmailInstance.document = canvas[0].contentDocument;
 												callback(gmailInstance);
-											} else if(canvas[0].contentDocument && jq('#gbar', canvas[0].contentDocument).size() == 0 && jq('iframe', canvas[0].contentDocument).size() == 1) {	// check for tear out
+											} else if(typeof(canvas[0].contentDocument) != 'undefined' && jq('#gb', canvas[0].contentDocument).size() == 0 && jq('iframe', canvas[0].contentDocument).size() == 1) {	
+												// check for tear out
 												var gmailInstance = new com.BlankCanvas.GmailAPI.gmailInstance(unsafeWin, jq, true);
 												gmailInstance.document = canvas[0].contentDocument;
 												callback(gmailInstance);
@@ -86,6 +87,7 @@ com.BlankCanvas.GmailAPI = {
 		} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler()'); }
 	},
 	gmailInstance:function(unsafeWin, jq, isTearOut) {
+		//alert('creating gmail inst');
 		isTearOut = typeof(isTearOut) == 'undefined' ? false : isTearOut;
 		this.isTearOut = isTearOut;
 		this.unsafeWin = unsafeWin;
@@ -214,11 +216,14 @@ com.BlankCanvas.GmailAPI = {
 					// The following is used during development to mark divs for easy debugging
 					// it helps find an instance of a relatively uncommon class name to use
 					// as a starting point for identifying the main element wrapper
+					/*
 					gmailInstance.$('div.diLZtc').each(function(i) {
 						this.id = 'bcGmailWrapperParentTest' + i;
 					});
+					*/
 					var subSelectStr =  ' div:first div:first + div.nH div:first';
 					var index = gmailInstance.$('div.q0CeU div.diLZtc').size() - 1;
+					
 					gmailInstance.mainElementWrapper = gmailInstance.$('div.q0CeU div.diLZtc:eq(' + index + ')' + subSelectStr);
 					// check for older versions of Gmail (depreciated)
 					if (gmailInstance.mainElementWrapper.size() == 0)

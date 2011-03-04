@@ -1,8 +1,11 @@
 {
 "update_url":"http://clients2.google.com/service/update2/crx",
 	"name": "__MSG_extName__",
+	"permissions": [
+		"bookmarks"
+	],
 	"default_locale": "en",
-	"version": "1.15.1",
+	"version": "1.16.0",
 	"description": "__MSG_extDesc__",
 	"options_page": "GoogleChrome/options.html",
 	"icons": { 
