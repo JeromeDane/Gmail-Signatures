@@ -1,4 +1,4 @@
-Blank Canvas Gmail Signatures
+Blank Canvas Signatures for Gmail
 ============================
 
 This extension for Firefox and Google Chrome automatically inserts HTML signatures into your Gmail messages based on which address you are sending from. 
