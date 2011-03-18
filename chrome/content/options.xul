@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
 <!--
-/* Blank Canvas Gmail Signatures [http://blankcanvas.me/gmailsignatures/]
+/* Blank Canvas Signatures for Gmail [http://blankcanvas.me/gmailsignatures/]
  * Copyright (c) 2009, 2010 Jerome Dane <http://blankcanvas.me/contact/>  
  * 
- * This file is part of the Blank Canvas Gmail Signatures. Please see /readme.md for
+ * This file is part of the Blank Canvas Signatures for Gmail. Please see /readme.md for
  * more information, credits, and author requests. 
  * 
  * BC Gmail Signatures is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
  */
 -->
 <dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-	id="bcGmailSigsOptionsDialog" title="Blank Canvas Gmail Signatures"
+	id="bcGmailSigsOptionsDialog" title="Blank Canvas Signatures for Gmail"
 	buttons="accept"
 	>
 	<script type="application/x-javascript" src="chrome://bcgmailsigs/content/com/BlankCanvas/BrowserDetect.js"/>

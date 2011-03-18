@@ -1,7 +1,7 @@
-/* Blank Canvas Gmail Signatures [http://blankcanvas.me/gmailsignatures/]
+/* Blank Canvas Signatures for Gmail [http://blankcanvas.me/gmailsignatures/]
  * Copyright (c) 2009, 2010 Jerome Dane <http://blankcanvas.me/contact/>  
  * 
- * This file is part of the Blank Canvas Gmail Signatures. Please see /readme.md for
+ * This file is part of the Blank Canvas Signatures for Gmail. Please see /readme.md for
  * more information, credits, and author requests. 
  * 
  * BC Gmail Signatures is free software: you can redistribute it and/or modify
@@ -131,7 +131,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 					// options button
 					var button = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
 					button.src = bcgs.icons.signatureOptions;
-					button.title = "Blank Canvas Gmail Signatures - " + bcgs.getText('options');
+					button.title = "Blank Canvas Signatures for Gmail - " + bcgs.getText('options');
 					sigInst.$(button).click(sigInst.showSignatureOptions);
 					sigInst.$(sigInst.wrappers.tools).append(button);
 					sigInst.$(elem).after(sigInst.wrappers.tools);
@@ -408,7 +408,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 							<a href="http://blankcanvas.me/gmailsignatures/" target="_blank">\
 								<img src="' + bcgs.images.bcLogo + '" align="absmiddle" style="border:none; float:left; margin-right:1em;" />\
 							</a>\
-							<div style="margin-top:10px; font-size:16px;"><strong>Blank Canvas Gmail Signatures</strong></div>\
+							<div style="margin-top:10px; font-size:16px;"><strong>Blank Canvas Signatures for Gmail</strong></div>\
 							<span style="font-size:11px; font-weight:normal;">' + bcgs.getText('developedBy') + ' Jerome Dane</span>\
 							<div style="width:220px; float:right; clear:left; padding-left:20px;">\
 								<p><strong>' + bcgs.getText('usefulLinks') + '</strong></p>\

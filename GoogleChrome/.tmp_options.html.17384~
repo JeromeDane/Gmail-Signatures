@@ -5,7 +5,7 @@
 </style>
 <div style="margin:2em auto; width:650; font-family:Arial, sans-serif; font-size:small;">
 	<img id="logo" style="float:left; margin:0 1em 2em 0;"/>
-	<h1 style="font-size:20px;">Blank Canvas Gmail Signatures<br/>
+	<h1 style="font-size:20px;">Blank Canvas Signatures for Gmail<br/>
 		<span style="font-size:12px; font-weight:normal;">by Jerome Dane</span>
 	</h1>
 	<p style="clear:both;">Options can be found within Gmail itself by clicking on the options icon in the compose view as follows:</p>
@@ -13,7 +13,7 @@
 	<div id="usefulLinks" style="margin-top:2em;">&nbsp;</div>
 </div>
 <script>
-	document.title = "Blank Canvas Gmail Signatures - Options";
+	document.title = "Blank Canvas Signatures for Gmail - Options";
 	var bcgs = {
 		getText:function(key) {
 			return chrome.i18n.getMessage(key);
