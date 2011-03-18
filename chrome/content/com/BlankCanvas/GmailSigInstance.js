@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-if(!com) { var com = {} }
-if(!com.BlankCanvas) { com.BlankCanvas = {} }
+if(!com) { var com = {}; }
+if(!com.BlankCanvas) { com.BlankCanvas = {}; }
 
 com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 	this.debug = function(str) {

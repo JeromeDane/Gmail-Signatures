@@ -1,5 +1,5 @@
 {
-	"extName": { "message": "Blank Canvas Gmail Signatures"	},
+	"extName": { "message": "Blank Canvas Signatures for Gmail"	},
 	"extDesc": { "message": "Automatically inserts HTML signatures into your Gmail messages based on which address you are sending from." },
 	"editSignature": { "message": "Edit Signature" },
 	"editSignatureTitle": { "message": "Edit the signature for the current email address." },
