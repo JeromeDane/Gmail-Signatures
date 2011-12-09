@@ -1,4 +1,4 @@
-/* Blank Canvas Signatures for Gmail [http://blankcanvas.me/gmailsignatures/]
+/* Blank Canvas Signatures for Gmail [https://plus.google.com/100088243593341595846/about]
  * Copyright (c) 2009, 2010 Jerome Dane <http://blankcanvas.me/contact/>  
  * 
  * This file is part of the Blank Canvas Signatures for Gmail. Please see /readme.md for

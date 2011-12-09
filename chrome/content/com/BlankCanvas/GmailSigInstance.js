@@ -329,7 +329,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 		//---------------------- showSignatureEdit -------------
 		this.showSignatureEdit = function() {
 			function getButtonHtml(id, text) {
-				return '<div id="' + id + '" class="J-Zh-I J-J5-Ji Bq L3" tabindex="1" style="-webkit-user-select: none; font-size:12px;">' + text + '</div>';
+				return '<div id="' + id + '" class="T-I J-J5-Ji Bq T-I-ax7 L3" tabindex="2" style="-webkit-user-select: none; font-size:12px;" role="button">' + text + '</div>';
 			}
 			//var sigInst = this;
 			try {
@@ -405,7 +405,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 							       <nobr><img src="' + bcgs.images.whiteHeart + '">' + bcgs.getText('donate') + '</nobr></span>\
 								<a href="http://www.facebook.com/pages/Blank-Canvas-Gmail-Signatures/254402756442" style="margin-left:1em;" target="_blank" title="' + bcgs.getText('followBcgsOnFacebook') + '"><img src="' + bcgs.images.facebookPage + '" style="border:none; vertical-align:middle; height:30px;"/></a>\
 							</div>\
-							<a href="http://blankcanvas.me/gmailsignatures/" target="_blank">\
+							<a href="https://plus.google.com/100088243593341595846/about" target="_blank">\
 								<img src="' + bcgs.images.bcLogo + '" align="absmiddle" style="border:none; float:left; margin-right:1em;" />\
 							</a>\
 							<div style="margin-top:10px; font-size:16px;"><strong>Blank Canvas Signatures for Gmail</strong></div>\

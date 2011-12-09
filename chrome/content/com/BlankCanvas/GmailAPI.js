@@ -185,7 +185,7 @@ com.BlankCanvas.GmailAPI = {
 						else
 							return 'unknown';
 				}
-			} catch(e) { this.debug("getMainElement()\n\n" + e); }
+			} catch(e) { this.debug("getActiveViewType()\n\n" + e); }
 		}
 		//-------------------------- getFromAddress ---------------------------
 		this.getFromAddress = function() {
@@ -217,14 +217,18 @@ com.BlankCanvas.GmailAPI = {
 					// it helps find an instance of a relatively uncommon class name to use
 					// as a starting point for identifying the main element wrapper
 					/*
-					gmailInstance.$('div.diLZtc').each(function(i) {
+					gmailInstance.$('div.oLaOvc').each(function(i) {
 						this.id = 'bcGmailWrapperParentTest' + i;
 					});
-					*/
-					var subSelectStr =  ' div:first div:first + div.nH div:first';
-					var index = gmailInstance.$('div.q0CeU div.diLZtc').size() - 1;
+					 */
 					
-					gmailInstance.mainElementWrapper = gmailInstance.$('div.q0CeU div.diLZtc:eq(' + index + ')' + subSelectStr);
+					gmailInstance.mainElementWrapper = gmailInstance.$('div.oLaOvc:eq(0) > div:first > div.nH:first');
+					
+					// check for older versions of Gmail (depreciated)
+					if (gmailInstance.mainElementWrapper.size() == 0) {
+						var subSelectStr =  ' div:first div:first + div.nH div:first';
+						gmailInstance.mainElementWrapper = gmailInstance.$('div.q0CeU div.diLZtc:eq(' + index + ')' + subSelectStr);
+					}
 					// check for older versions of Gmail (depreciated)
 					if (gmailInstance.mainElementWrapper.size() == 0)
 						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + div div:first div:first + div div:eq(2) + div div:first div:eq(3) + div div:first');
