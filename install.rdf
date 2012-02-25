@@ -25,7 +25,7 @@
 	<Description about="urn:mozilla:install-manifest" 
 		em:homepageURL="http://blankcanvas.me/pages/id_9/n_gmail_signatures/"
 		em:id="gmail_sigs@blankcanvasweb.com"
-		em:version="1.17.1"
+		em:version="1.17.2b"
 		em:type="2"
 		em:iconURL="chrome://bcgmailsigs/skin/icon.png"
 		em:name="Blank Canvas Signatures for Gmail "

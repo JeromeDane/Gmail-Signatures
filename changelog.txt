@@ -1,4 +1,7 @@
-version 1.17.1(b) - in development
+version 1.17.2(b) - released February 25, 2012
+- Fixed sig tools not displayed after from selector bug from v1.17.1
+
+version 1.17.1(b) - released February 25, 2012
 - Fixed remove signature button not working
 - Fixed massive failure when no extra send from addresses are set up
  

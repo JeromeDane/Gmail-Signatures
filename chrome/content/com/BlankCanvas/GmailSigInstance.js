@@ -91,7 +91,6 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 					sigInst.wrappers.tools.innerHTML = 'Signature '; // reset tools
 					sigInst.wrappers.tools.setAttribute('style', 'display:block; margin:.5em 0;');
 				} else {
-					sigInst.wrappers.tools.innerHTML = 'Signature '; // reset tools
 					sigInst.wrappers.tools.setAttribute('style', 'margin-left:.5em;');
 				}
 				
@@ -147,7 +146,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 		//----------------------- drawToolsForCompose ------------
 		this.drawToolsForActiveView = function() {
 			
-			var fromSelect = sigInst.gmail.getFromSelect();
+			var fromSelect = sigInst.$(sigInst.gmail.getFromSelect());
 			var discardButton = null;
 			function getTargetWhenNoSelector() {
 			
@@ -158,6 +157,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 			switch(sigInst.gmail.getActiveViewType()) {
 				case 'co':
 					var elem = fromSelect ? fromSelect : getTargetWhenNoSelector();
+					
 					sigInst.drawToolsAfter(elem);
 					break;
 				case 'cv':
