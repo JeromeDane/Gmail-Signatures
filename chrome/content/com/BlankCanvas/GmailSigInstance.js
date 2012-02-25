@@ -51,22 +51,20 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 					sigInst.gmail.registerMessageBoxHandler(sigInst.conversationContext);
 					break;
 			}
-		}
+		};
 		//----------------------- Compose Context -----------------
 		this.composeContext = function() {
-			try {
-				if (sigInst.gmail.isTearOut) 
-					sigInst.conversationContext();
-				else {
-					sigInst.selectedSigType = {}; // reset selected signature type to default
-					var fromSelector = sigInst.gmail.getFromSelect();
-					if (fromSelector) 
-						fromSelector.addEventListener('change', sigInst.insertSignatureAndUpdateTools, true);
-					sigInst.drawToolsForActiveView();
-					sigInst.insertSignature();
-				}
-			} catch(e) { sigInst.debug("composeContext()\n\n" + e); } 
-		}
+			if (sigInst.gmail.isTearOut) 
+				sigInst.conversationContext();
+			else {
+				sigInst.selectedSigType = {}; // reset selected signature type to default
+				var fromSelector = sigInst.gmail.getFromSelect();
+				if (fromSelector) 
+					fromSelector.addEventListener('change', sigInst.insertSignatureAndUpdateTools, true);
+				sigInst.drawToolsForActiveView();
+				sigInst.insertSignature();
+			}
+		};
 		//----------------------- Compose Context -----------------
 		this.conversationContext = function() {
 			try {
@@ -82,101 +80,105 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 					sigInst.gmail.getFromSelect().addEventListener('change', sigInst.insertSignatureAndUpdateTools, false);
 				});
 			} catch(e) { sigInst.debug("conversationContext()\n\n" + e); } 
-		}
+		};
 		//----------------------- drawToolsAfter -----------------
-		this.drawToolsAfter = function(elem) {
-			try {
-				sigInst.getCurrentSignature(function(currentSig) {
-					sigInst.selectedSigType = typeof(sigInst.selectedSigType) == 'undefined' ? {} : sigInst.selectedSigType;
-					sigInst.wrappers.tools = typeof(sigInst.wrappers.tools) == 'undefined' ? sigInst.gmail.createElement('span') : sigInst.wrappers.tools;
-					sigInst.wrappers.tools.innerHTML = '';	// reset tools
+		this.drawToolsAfter = function(elem) { 
+			sigInst.getCurrentSignature(function(currentSig) {
+				sigInst.selectedSigType = typeof(sigInst.selectedSigType) == 'undefined' ? {} : sigInst.selectedSigType;
+				sigInst.wrappers.tools = typeof(sigInst.wrappers.tools) == 'undefined' ? sigInst.gmail.createElement('span') : sigInst.wrappers.tools;
+				
+				if(elem.attr('name') == 'to') {
+					sigInst.wrappers.tools.innerHTML = 'Signature '; // reset tools
+					sigInst.wrappers.tools.setAttribute('style', 'display:block; margin:.5em 0;');
+				} else {
+					sigInst.wrappers.tools.innerHTML = 'Signature '; // reset tools
 					sigInst.wrappers.tools.setAttribute('style', 'margin-left:.5em;');
-					// signature type
-					var sigSelect = sigInst.gmail.createElement('select');
-					sigSelect.id = 'bcGmailSigsSigTypeSelector';
-					sigSelect.setAttribute('style', 'font-size:80%');
-					sigSelect.addEventListener('change', function() {
-						sigInst.selectedSigType[sigInst.gmail.getFromAddress()] = this.selectedIndex;
-						sigInst.insertSignatureAndUpdateTools();
-					}, true);
-					var optionsHtml = '';
-					for(var i = 1; i < 5; i++) {
-						var selectedTypeIndex = typeof(sigInst.selectedSigType[sigInst.gmail.getFromAddress()]) != 'undefined' ? sigInst.selectedSigType[sigInst.gmail.getFromAddress()] : 0;
-						optionsHtml += '<option' + (i == selectedTypeIndex + 1 ? ' selected="selected"' : '') + '>' + unescape(bcgs.getPref('label' + i)) + '</option>';
-					}
-					sigSelect.innerHTML = optionsHtml;	
-					sigInst.$(sigInst.wrappers.tools).append(sigSelect);
-					// create/edit button
-					var createEdit = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
-					createEdit.addEventListener('click', sigInst.showSignatureEdit, true);
-					createEdit.src = currentSig == '' ? bcgs.icons.signatureCreate : bcgs.icons.signatureEdit;
-					createEdit.title = currentSig == '' ? bcgs.getText('createSignature') : bcgs.getText('editSignature');
-					sigInst.$(sigInst.wrappers.tools).append(createEdit);
-					// reinsertButton
-					if(bcgs.getPref('showReinsert') == 'true') {
-						var reinsertButton = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
-						reinsertButton.src = bcgs.icons.signatureReinsert;
-						reinsertButton.title = bcgs.getText('reinsertTitle');
-						sigInst.$(reinsertButton).click(sigInst.insertSignature);
-						sigInst.$(sigInst.wrappers.tools).append(reinsertButton);
-					}
-					// remove button
-					if(bcgs.getPref('showRemove') == 'true') {
-						var removeButton = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
-						removeButton.src = bcgs.icons.signatureRemove;
-						removeButton.title = bcgs.getText('removeButtonTitle');
-						sigInst.$(removeButton).click(sigInst.removeSignature);
-						sigInst.$(sigInst.wrappers.tools).append(removeButton);
-					}
-					// options button
-					var button = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
-					button.src = bcgs.icons.signatureOptions;
-					button.title = "Blank Canvas Signatures for Gmail - " + bcgs.getText('options');
-					sigInst.$(button).click(sigInst.showSignatureOptions);
-					sigInst.$(sigInst.wrappers.tools).append(button);
-					sigInst.$(elem).after(sigInst.wrappers.tools);
-				});
-			} catch(e) {
-				sigInst.debug("drawToolsAfter()\n\n" + e); 
-			}
+				}
+				
+				
+				// signature type
+				var sigSelect = sigInst.gmail.createElement('select');
+				sigSelect.id = 'bcGmailSigsSigTypeSelector';
+				sigSelect.setAttribute('style', 'font-size:80%');
+				sigSelect.addEventListener('change', function() {
+					sigInst.selectedSigType[sigInst.gmail.getFromAddress()] = this.selectedIndex;
+					sigInst.insertSignatureAndUpdateTools();
+				}, true);
+				var optionsHtml = '';
+				for(var i = 1; i < 5; i++) {
+					var selectedTypeIndex = typeof(sigInst.selectedSigType[sigInst.gmail.getFromAddress()]) != 'undefined' ? sigInst.selectedSigType[sigInst.gmail.getFromAddress()] : 0;
+					optionsHtml += '<option' + (i == selectedTypeIndex + 1 ? ' selected="selected"' : '') + '>' + unescape(bcgs.getPref('label' + i)) + '</option>';
+				}
+				sigSelect.innerHTML = optionsHtml;	
+				sigInst.$(sigInst.wrappers.tools).append(sigSelect);
+				// create/edit button
+				var createEdit = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
+				createEdit.addEventListener('click', sigInst.showSignatureEdit, true);
+				createEdit.src = currentSig == '' ? bcgs.icons.signatureCreate : bcgs.icons.signatureEdit;
+				createEdit.title = currentSig == '' ? bcgs.getText('createSignature') : bcgs.getText('editSignature');
+				sigInst.$(sigInst.wrappers.tools).append(createEdit);
+				// reinsertButton
+				if(bcgs.getPref('showReinsert') == 'true') {
+					var reinsertButton = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
+					reinsertButton.src = bcgs.icons.signatureReinsert;
+					reinsertButton.title = bcgs.getText('reinsertTitle');
+					sigInst.$(reinsertButton).click(sigInst.insertSignature);
+					sigInst.$(sigInst.wrappers.tools).append(reinsertButton);
+				}
+				// remove button
+				if(bcgs.getPref('showRemove') == 'true') {
+					var removeButton = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
+					removeButton.src = bcgs.icons.signatureRemove;
+					removeButton.title = bcgs.getText('removeButtonTitle');
+					sigInst.$(removeButton).click(sigInst.removeSignature);
+					sigInst.$(sigInst.wrappers.tools).append(removeButton);
+				}
+				// options button
+				var button = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
+				button.src = bcgs.icons.signatureOptions;
+				button.title = "Blank Canvas Signatures for Gmail - " + bcgs.getText('options');
+				sigInst.$(button).click(sigInst.showSignatureOptions);
+				sigInst.$(sigInst.wrappers.tools).append(button);
+				// append wrapper
+				sigInst.$(elem).after(sigInst.wrappers.tools);
+				
+			});
 		}
 		//----------------------- drawToolsForCompose ------------
 		this.drawToolsForActiveView = function() {
-			try {
-				var fromSelect = sigInst.gmail.getFromSelect();
-				var discardButton = null;
-				function getTargetWhenNoSelector() {
-					discardButton = sigInst.gmail.getDiscardButton();
-					return com.BlankCanvas.BrowserDetect.browser == 'Chrome' ?
-						sigInst.$(discardButton).parent() :
-						discardButton;
-				}
-				switch(sigInst.gmail.getActiveViewType()) {
-					case 'co':
-						var elem = fromSelect ? fromSelect : getTargetWhenNoSelector();
-						sigInst.drawToolsAfter(elem);
-						break;
-					case 'cv':
-						if(fromSelect)
-							sigInst.drawToolsAfter(fromSelect);
-						else {
-							var fromHiddenInput = sigInst.$('input[name="from"]', sigInst.gmail.getActiveElement());
-							var elem = fromHiddenInput.size() == 1 ? fromHiddenInput : getTargetWhenNoSelector();
-							sigInst.drawToolsAfter(elem);
-						}
-						break;
-				}
-				// implement fix for Chrome selector not expanding bug
-				if(discardButton && com.BlankCanvas.BrowserDetect.browser == 'Chrome') {
-					var wrapper = sigInst.$('#bcGmailSigsSigTypeSelector').parent();
-					wrapper.css('position', 'absolute');
-					//alert(sigInst.$(discardButton).position().left);
-					wrapper.css('top', (sigInst.$(discardButton).position().top + 2) + 'px');
-					wrapper.css('left', (sigInst.$(discardButton).position().left + sigInst.$(discardButton).width() + 10) + 'px');
-				}
-			} catch(e) {
-				sigInst.debug("drawToolsForActiveView()\n\n" + e); 
+			
+			var fromSelect = sigInst.gmail.getFromSelect();
+			var discardButton = null;
+			function getTargetWhenNoSelector() {
+			
+				var toField = sigInst.gmail.getToField();
+				return toField;
+				
 			}
+			switch(sigInst.gmail.getActiveViewType()) {
+				case 'co':
+					var elem = fromSelect ? fromSelect : getTargetWhenNoSelector();
+					sigInst.drawToolsAfter(elem);
+					break;
+				case 'cv':
+					if(fromSelect)
+						sigInst.drawToolsAfter(fromSelect);
+					else {
+						var fromHiddenInput = sigInst.$('input[name="from"]', sigInst.gmail.getActiveElement());
+						var elem = fromHiddenInput.size() == 1 ? fromHiddenInput : getTargetWhenNoSelector();
+						sigInst.drawToolsAfter(elem);
+					}
+					break;
+			}
+			// implement fix for Chrome selector not expanding bug
+			if(discardButton && com.BlankCanvas.BrowserDetect.browser == 'Chrome') {
+				var wrapper = sigInst.$('#bcGmailSigsSigTypeSelector').parent();
+				wrapper.css('position', 'absolute');
+				//alert(sigInst.$(discardButton).position().left);
+				wrapper.css('top', (sigInst.$(discardButton).position().top + 2) + 'px');
+				wrapper.css('left', (sigInst.$(discardButton).position().left + sigInst.$(discardButton).width() + 10) + 'px');
+			}
+		
 		}
 		//---------------------- getCurrentSignature -------------
 		this.getCurrentSignature = function(callback) {

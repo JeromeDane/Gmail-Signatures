@@ -1,0 +1,258 @@
+version 1.17.1(b) - in development
+- Fixed remove signature button not working
+- Fixed massive failure when no extra send from addresses are set up
+ 
+version 1.7.0(b) - released December 9, 2011
+- Initial update for "New Gmail Layout" of winter, 2011-2012
+- Fixed styling of edit buttons when editing signature
+
+version 1.16.0(b) - released February 21, 2011 
+- Another fix for new Gmail layout
+- Firefox version no longer creates a data bookmark even when bookmark storage is not enabled
+- Added support for bookmark storage within Google Chrome
+- version 1.15.1(b) - released November 1, 2010
+- Fixes to bugs in single address handling from v1.15.0
+
+version 1.15.0(b) - released October 31, 2010
+- Fix to handle latest changes to Gmail interface
+- Implemented max 10 retries on error so that CPU usage doesn't jump if add-on fails
+- Added fix for replying to messages when maps preview labs feature is enabled
+- Changed license to GPLv3 - first open source release
+
+version 1.14.1(b) [firefox] - released October 14, 2010
+- Fixed jQuery related crashing in Minefield 4.0b8pre
+- version 1.14.0- released October 1, 2010
+- Added support for storing signature data in a bookmark to allow for signature synching (enable under options) [Firefox only]
+- Fixed signature not being inserted when switching from address with non-default selected to address with no default
+- Re-implemented fix for "Right-side chat" labs feature
+
+version 1.13.0- released September 30, 2010
+- Added support for tear out mode
+- Fixed bug from v1.12.9 that caused Getting Started "nag" tab to open every time Firefox loads
+- Getting Started page no longer loads on installation or upgrade
+- Minor reduction in background resource usage
+- Unified loading method for improved stability in Firefox
+- Gmail for domains should work in Firefox now
+- Improved support for Firefox 4
+- Fixed signature select drop-down not expanding under certain circumstances in Google Chrome
+- Minor improvements to debug mode output
+- Fixed signature tools not showing up after opening a saved reply, discarding it, then clicking reply
+
+version 1.12.10 [chrome]- released September 29, 2010 
+- Fixed "can't find default property of undefined" error
+- version 1.12.9(b)- released September 29, 2010
+- Added support for Firefox 4 beta
+- Fixed placement of signature tools after "Discard" button when "Send & Archive" labs feature is enabled
+
+version 1.12.7 - released July 3, 2010
+- Included jQuery v1.4.2 within package
+- Isolated jQuery
+- Unified method of loading jQuery instance
+- version 1.12.06(b) [firefox] - released February 26, 2010
+- Updated add-on description
+- Removed check Blank Canvas web site for updates 
+- Fixed bug: No preview update on address change
+- version 1.12.6 [chrome] - released February 19, 2009
+- First version for Google Chrome
+- Onlyhas English language at the moment
+
+version 1.12.05b - released February 18, 2010
+- Massive improvement in signature insertion methods
+- Fixed bug in insertion of duplicate signatures when editing drafts
+- Better detection of insertion above / below quoted text
+- Empty signatures no longer insert extra line breaks
+- Added optional button to remove the signature from the current message
+
+version 1.12.04b- released February 18, 2010
+- New "beta" designation
+- Faster official Firefox add-on update for future versions
+- version 1.12.04- released February 15, 2010
+- Fixed error thrown in detection of edit signature box
+- Hash strings around signature are no longer displayed accidentally under some circumstances
+- Signature position now updates in current message when saving options
+- Re-implemented missing "Delete Signature" button when editing signature
+- Removed error alert when main element not found unless using JavaScript alert debug mode
+- Implemented fix for Gmail labs chat box on right
+
+version 1.12.03- released February 12, 2010
+- Fixed html not showing up in edit box when loading previously saved signatures
+- Fixed inability to save signatures that resulted from jQuery isolation fix in v1.12.02
+- Fixed preview pane bug that resulted from jQuery isolation fix in v1.12.02
+
+version 1.12.02- released February 12, 2010
+- Re-implemented the options window when looking at your list of add-ons. (was lost in v1.12.01)
+- Added debug mode setting to options window in add-on list
+- Added useful links tab to options window in add-on list
+- Resolved conflicts with other add-ons by sand-boxing jQuery within an iFrame
+
+version 1.12.01- released February 12, 2010
+- Fixed install error in Firefox 3.6
+- Removed large alert error from com.BlamkCanvas.GmailAPI unless debug mode is set to JS alerts
+
+version 1.12.00- released February 11, 2010
+- Reworked all code from scratch and made it much more manageable
+- Improved javascript isolation to better prevent conflicts
+- Implemented jQuery for faster coding and better scalability
+- Developed custom Gmail API to replace the official API broken by Google's last Gmail release
+- Greatly reduced dependancy of Gmail's Greasemonkey API (now only used for basic detection)
+- Fixed bug where signatures of different users would replace each other if both were using the add-on
+- Implemented new method of handling Gmail in multiple tabs and multiple accounts
+- Improved stability (for real this time)
+- Cleaned up signature preview area so that it no longer looks like an editable box
+- Cleaned up signature options section and added link to Facebook page
+- Re-implemented the reinsert button by request
+- Now only checks Blank Canvas web site for new version once every 24 hours instead of every time Firefox starts
+- Added option to disable checking the Blank Canvas web site for updates
+- Modified translation handling to use English strings instead of crashing if local translation not found
+- Updated base English translation template file
+- Updated donation interface
+
+version 1.11.13 - released January 17, 2010
+- Replaced edit/create signature and options buttons with icons
+- Improvements in the handling of multiple Gmail tabs
+- Signature preview now uses correct default font (Arial small)
+- Fixed stability in Gmail detection which was preventing signature insertion
+- Improved stability of signature insertion
+- Fixed implementation for Gmail accounts with no additional from addresses set up
+
+version 1.11.12 - released March 23, 2009
+- Wrapped code in JavaScript object to reduce conflicts with other add-ons
+- Further improved listener removal and garbage collection
+- Added Hungarian translation - thanks Laszlo!
+- Added Arabic translation - thanks Shady Sharaf! (partially supported because of right-to-left language bug)
+- Cleaned up Dutch translation- thanks Ventiman!
+- Fixed string bundle conflict with many other add-ons which should reduce the number of conflicting add-ons to 0
+- Further reduced CPU usage
+- Signatures in drafts are no longer overwritten when opening a saved draft
+- Update notification only occurs once now as intended
+- Options button in add-on list now opens getting started page
+
+version 1.11.11- released February 04, 2009
+- Fixed single account not working because of Gmail code updates
+
+version 1.11.10 - released February 04, 2009
+- Drastically reduced CPU usage and improved performance
+- Improved support for multiple open Gmail tabs
+- Added Greek translation (thanks Savvas Dalkitsis!)
+- Bug Fixed: Signature tools not drawn second reply/forward on thread
+- If you reply to or forward a message in an email conversation thread, it will work the first time, but if you then try to reply to a different message within the thread without leaving the page, the signature tools will not be drawn. I am working on a listener to detect the disappearance of the from address selector in order to trigger the function that listens for the clicking of a new compose window.
+
+version 1.11.09- released November 26, 2008
+- Modified signature detection to reduce instances of quoted text being deleted on reply
+- Implemented automatic checking for updates
+
+version 1.11.08 - released November 24, 2008
+- Refined Dutch translation (thanks Ventiman!)
+- Added Russian translation (thanks Dmitry Bychkov!)
+- Added Sweedish translation (thanks Fredrik Broman!)
+- Edit box automatically focused when editing signature
+- Bug Fix: Multiple Gmail tabs It seems like the add-on stops working if you open Gmail in multiple tabs. I know exactly what's happening with the script, but it's very hard to fix. In the mean time, the add-on should start working again if you close all Gmail windows and tabs and open a single new one.
+
+version 1.11.07 - released August 7, 2008
+- Added Slovenian translation (thanks Gosan!)
+- Set default language to English instead of German (bug created in v1.11.06)
+
+version 1.11.06 - released August 4, 2008
+- Fixed broken Portuguese translation
+- Added German translation (thanks Wolfgang!)
+- Fixed missing home page and author information in add-ons window
+- Added Blank Canvas icon
+- Fixed bug that caused non-breaking spaces to be stripped from HTML when editing saved signatures
+
+version 1.11.05- released July 29, 2008
+- Added Spanish translation (thanks Kevin!)
+- Fixed errors in French translation (thanks toretob29!)
+- Reduced reliance on extraneous language files
+
+version 1.11.04 - released July 26, 2008
+- Refined Korean translation (thanks Kay)
+- Added single address support for all left-to-right languages
+- Fixed bug with special characters in signature labels
+
+version 1.11.03 - (released July 23, 2008)
+- Added Italian translation (thanks Mako!)
+- Added Dutch translation (thanks Jan!)
+
+version 1.11.02 (released July 22, 2008)
+- Added Chinese translation (thanks Andrew!)
+- Added Portuguese translation (thanks Erick!)
+- Added Korean translation (thanks Kay!)
+
+version 1.11.01 (released July 20, 2008)
+- Added support for translations (localization)
+- Created English localization files
+- Added "Share it" section under "Promote & Support" in the options window
+- Added full French translation
+
+Version 1.11 (released July 17, 2008)
+- Further improved stability
+- Cleaned up buttons so that there are only two now (create/edit and options)
+- Increased support for Google Apps with custom domains
+- Added support for up to 4 signatures per address
+- Added options to customize the labels for the 4 signature slots (e.g. "Default", "Personal", etc.)
+- "Reinsert" signature button is now hidden by default with option to show it
+- Added useful links to options window
+- Added promote & support information to options window
+- Moved "Donate" button to options window
+
+Version 1.10 (released July 14, 2008)
+- Further improved stability by increasing error checking and retries.
+- Added support (not translations) for the following languages: Czech, Danish, German, French, Italian, Norwegian, Polish, Portuguese, Romanian, Spanish
+- Formatted options pane and added Save & Cancel buttons
+- Added signature position option (above/below quoted text)
+- Added hide donate button option
+- Added "Reinsert" button to allow for resetting of signature in message by reinserting it.
+
+Version 1.09.03(released June 27, 2008)
+- Fixed quoted message clearing bug on reply when changing from address
+- Improved signature matching pattern
+
+Version 1.09.02(released June 23, 2008)
+- Fixed minor spelling error in interface
+- Signature defaults to above quoted text (option to change in upcoming  v1.10)
+- Simplified get preference algorithm
+- Re-added support for special characters (Thanks for the reminder Paul)
+
+Version 1.09.01 (released June 22, 2008)
+- Improved URL detection algorithms and Gmail context detection
+- Fixed bug that caused preferences to be loaded each time you opened Gmail instead of just once on initialization
+- Fixed memory leak caused by various Gmail state listener objects
+- Fixed bug that caused signature tools to be drawn multiple times and in the wrong location in some circumstances
+
+Version 1.09(released June 21, 2009)
+- Fixed bug that was causing signature tools not to be drawn for some Gmail accounts
+- Added display of Getting Started / What's New page on add-on install or upgrade
+- Version 1.08(released June 20, 2008)
+- Moved entire Greasemonkey script into a Firefox add-on extension
+- Re-wrote script from the ground up using a centralized object
+- Fixed virtually all stability bugs
+- Completed support for Firefox 3
+- Added real-time signature preview pane for signature editing
+- Added options button (options to be implemented in next version)
+- Added donation button (will have option to hide in next version)
+- Old Greasemonkey Script
+
+Version 1.07(released January 30, 2008)
+- Changed "HMLT" to "HTML" in left column box title (thanks Voyagerfan5761!)
+- Added support for non-ASCII UTF-8 strings (thanks Andrew Chang!)
+- Fixed signatures erasing each other (thanks to Kristof Speeckaertt, Dan, Michael Prassel, Elvis, Gabriel Rodriguez, and others!)
+- Saving one signature erases another (fixed)
+- I am getting some reports of signatures getting erased when you create a new one on a different address. This has happened once or twice to me, but it's not a regular thing. I believe the issue comes from a pattern issue in the email addresses themselves.
+- Added list of currently saved signatures to left bar box.
+- Improved empty signature detection
+
+Version 1.06(released January 28, 2008)
+- Added clearer setup instructions.
+
+Version 1.05(released January 28, 2008)
+- Fixed bug that was causing newly created signatures not to display immediately
+- Version 1.04(released January 28, 2008)
+- No more need for script editing
+- Added easy setup interface for creation and editing of signatures
+- Added support for only one address
+- Added left bar box for script setup and easy access to script home page
+- Fixed having only one address causing infinite loop
+- The script is programmed to keep running a detection function until it finds the drop down selector that allows you to choose which email address you want to send. This selector is only available if you have set up multiple "Accounts" (email addresses) in your "Settings" page. Do not install this script if you only use one email address. Future versions will fix this issue.
+
+Version 1.03(released January 24, 2008)
+- Added notification if no signature is found for the selected email address.

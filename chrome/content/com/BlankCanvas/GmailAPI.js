@@ -119,6 +119,14 @@ com.BlankCanvas.GmailAPI = {
 			var message = str + "\n\n" + getFunctionName(arguments.callee.caller);
 			com.BlankCanvas.GmailSignatures.debug(message, 'com.BlankCanvas.GmailAPI');
 		}
+		//-------------------------- getToField ------------------------------
+		this.getToField = function() {
+			return this.$('textarea[name="to"]');
+		}
+		//-------------------------- getSubjectField ------------------------------
+		this.getSubjectField = function() {
+			return this.$('input[name="subject"]');
+		}
 		//-------------------------- getSendButton ------------------------------
 		this.getDiscardButton = function() {
 			var buttonWrapper = isTearOut ?
@@ -279,6 +287,10 @@ com.BlankCanvas.GmailAPI = {
 				if(this.$('#gbvg .gbps2').size() > 0) {
 					return this.$('#gbvg .gbps2').text();
 				}
+				// try older style 
+				if(this.$('#gbmpdv .gbps2').size() > 0) {
+					return this.$('#gbmpdv .gbps2').text();
+				}
 				
 				// try getting old style
 				return this.$('b', this.$('#guser')).eq(0).text();
@@ -315,24 +327,22 @@ com.BlankCanvas.GmailAPI = {
 		}
 		//-------------------------- registerMessageBoxHandler ------------------
 		this.registerMessageBoxHandler = function(callback) {
-			try {
-				var gmailInstance = this;
-				this.listeningForMessageBox = true;
-				this.unsafeWin.addEventListener('unload', function() {	// listen for page unload and stop listening 
-					gmailInstance.listeningForMessageBox = false;
-				}, true);
-				function checkForMessageBox() {
-					try {
-						if(gmailInstance.listeningForMessageBox) {
-							if(gmailInstance.getMessageBox())
-								callback();
-							else
-								gmailInstance.unsafeWin.setTimeout(checkForMessageBox, 500);
-						}
-					} catch(e) { gmailInstance.debug("registerMessageBoxHandler()\n\n" + e); }
+		
+			var gmailInstance = this;
+			this.listeningForMessageBox = true;
+			this.unsafeWin.addEventListener('unload', function() {	// listen for page unload and stop listening 
+				gmailInstance.listeningForMessageBox = false;
+			}, true);
+			function checkForMessageBox() {
+				if(gmailInstance.listeningForMessageBox) {
+					if(gmailInstance.getMessageBox())
+						callback();
+					else
+						gmailInstance.unsafeWin.setTimeout(checkForMessageBox, 500);
 				}
-				checkForMessageBox();
-			} catch(e) { gmailInstance.debug("registerMessageBoxHandler()\n\n" + e); }			
+			}
+			checkForMessageBox();
+					
 		}
 		//-------------------------- registerMessageBoxGoneHandler ------------------
 		this.registerMessageBoxGoneHandler = function(callback) {
@@ -355,29 +365,26 @@ com.BlankCanvas.GmailAPI = {
 		}
 		//-------------------------- registerViewChangeCallback -----------------
 		this.registerViewChangeCallback = function(callback) {
-			try {
-				var gmailInstance = this;
-				var oldActiveElement = null;
-				this.listeningForViewChange = true;
-				this.unsafeWin.addEventListener('unload', function() {	// listen for page unload and stop listening 
-					gmailInstance.listeningForViewChange = false;
-					gmailInstance.stopListeningForElements();
-				}, true);				
-				this.unsafeWin.setInterval(function() {
-					try {
-						if(gmailInstance.listeningForViewChange) {
-							var newActiveElement = gmailInstance.getActiveElement();
-							if (newActiveElement != oldActiveElement) {
-								oldActiveElement = newActiveElement;
-								gmailInstance.stopListeningForElements();
-								callback();
-							}
+			
+			var gmailInstance = this;
+			var oldActiveElement = null;
+			this.listeningForViewChange = true;
+			this.unsafeWin.addEventListener('unload', function() {	// listen for page unload and stop listening 
+				gmailInstance.listeningForViewChange = false;
+				gmailInstance.stopListeningForElements();
+			}, true);				
+			this.unsafeWin.setInterval(function() {
+				try {
+					if(gmailInstance.listeningForViewChange) {
+						var newActiveElement = gmailInstance.getActiveElement();
+						if (newActiveElement != oldActiveElement) {
+							oldActiveElement = newActiveElement;
+							gmailInstance.stopListeningForElements();
+							callback();
 						}
-					} catch(e) { gmailInstance.debug("registerViewChangeCallback()\n\n" + e); }
-				}, 500);
-			} catch(e) {
-				this.debug("registerViewChangeCallback()\n\n" + e);
-			}
+					}
+				} catch(e) { gmailInstance.debug("registerViewChangeCallback()\n\n" + e); }
+			}, 500);
 		}
 		//-------------------------- setMessageBoxText -----------------
 		this.setMessageText = function(str) {
