@@ -250,14 +250,14 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 		}
 		//---------------------- insertSignature -----------------
 		this.removeSignature = function() {
-			try {
+			//try {
 				var messageIframe = sigInst.gmail.getMessageIframe(); 
-				var messageElement = messageIframe.contentWindow.document.body;
+				var messageElement = messageIframe.contentDocument.body;
 				var key = com.BlankCanvas.md5(sigInst.gmail.getPrimaryEmailAddress()).match(/^.{10}/)[0];
-				var existingSig = sigInst.$('div[name=sig_' + key + ']', messageElement);
+				var existingSig = sigInst.$('div[name="sig_' + key + '"]', messageElement);
 				if(existingSig.size() > 0)
 					existingSig.remove();
-			} catch(e) { sigInst.debug("removeSignature()\n\n" + e); }
+			//} catch(e) { sigInst.debug("removeSignature()\n\n" + e); }
 		}
 		//---------------------- saveOptions ------------------
 		this.saveOptions = function() {

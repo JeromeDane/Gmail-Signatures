@@ -5,7 +5,7 @@
 		"bookmarks"
 	],
 	"default_locale": "en",
-	"version": "1.17.0",
+	"version": "1.17.1",
 	"description": "__MSG_extDesc__",
 	"options_page": "GoogleChrome/options.html",
 	"icons": { 

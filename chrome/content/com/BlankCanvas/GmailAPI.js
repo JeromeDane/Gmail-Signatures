@@ -274,8 +274,14 @@ com.BlankCanvas.GmailAPI = {
 			try {
 				if(isTearOut) {
 					return unsafeWin.document.title.toString().match(/([^\s]+)\s*$/)[1];
-				} else
-					return this.$('b', this.$('#guser')).eq(0).text();
+				}
+				// try clean style from december 2011
+				if(this.$('#gbvg .gbps2').size() > 0) {
+					return this.$('#gbvg .gbps2').text();
+				}
+				
+				// try getting old style
+				return this.$('b', this.$('#guser')).eq(0).text();
 			} catch(e) { this.debug("getPrimaryEmailAddress\n\n" + e); }
 		}
 		//-------------------------- getSendButton ------------------------------
