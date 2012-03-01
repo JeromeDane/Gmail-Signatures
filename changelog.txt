@@ -1,3 +1,15 @@
+version 1.17.3(b) - released March 01, 2012
+- Fixed multiple signature tools bug
+- Fixed signature tools not showing up when not using additional from addresses
+- Fixed signature tools not showing up for replies
+- Updated donation link in options to go directly to PayPal instead of using Firefox system popup
+- Added link to project source on github to options window  
+- Changed facebook image to simple icon in options window
+- Added link to Google+ page in options window
+- Added link to Twitter page in options window
+- Updated extension logo in options window
+- Linked author name in options window to Google profile
+
 version 1.17.2(b) - released February 25, 2012
 - Fixed sig tools not displayed after from selector bug from v1.17.1
 

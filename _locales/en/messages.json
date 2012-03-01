@@ -27,6 +27,7 @@
 	"donate": { "message": "Donate" },
 	"donateTitle": { "message": "Make a donation to help support this add-on" },
 	"followBcgsOnFacebook": { "message": "Follow Blank Canvas Signatures for Gmail on Facebook" },
+	"followBcgsOnGooglePlus": { "message": "Follow Blank Canvas Signatures for Gmail on Google+" },
 	"developedBy": { "message": "by" },
 	"signaturePosition": { "message": "Signature Position" },
 	"aboveQuotedText": { "message": "above quoted text" },

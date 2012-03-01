@@ -83,17 +83,21 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 		};
 		//----------------------- drawToolsAfter -----------------
 		this.drawToolsAfter = function(elem) { 
+		
 			sigInst.getCurrentSignature(function(currentSig) {
 				sigInst.selectedSigType = typeof(sigInst.selectedSigType) == 'undefined' ? {} : sigInst.selectedSigType;
-				sigInst.wrappers.tools = typeof(sigInst.wrappers.tools) == 'undefined' ? sigInst.gmail.createElement('span') : sigInst.wrappers.tools;
 				
+				// remove any existing signature tools and re-draw them
+				sigInst.wrappers.tools = typeof(sigInst.wrappers.tools) == 'undefined' ? sigInst.gmail.createElement('span') : sigInst.wrappers.tools;
+				sigInst.wrappers.tools.innerHTML = '';
+				
+				// determine whether using multiple from addresses or not 
 				if(elem.attr('name') == 'to') {
 					sigInst.wrappers.tools.innerHTML = 'Signature '; // reset tools
 					sigInst.wrappers.tools.setAttribute('style', 'display:block; margin:.5em 0;');
 				} else {
 					sigInst.wrappers.tools.setAttribute('style', 'margin-left:.5em;');
 				}
-				
 				
 				// signature type
 				var sigSelect = sigInst.gmail.createElement('select');
@@ -110,6 +114,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				}
 				sigSelect.innerHTML = optionsHtml;	
 				sigInst.$(sigInst.wrappers.tools).append(sigSelect);
+				
 				// create/edit button
 				var createEdit = bcgs.formatIconButton(sigInst.gmail.createElement('img'));
 				createEdit.addEventListener('click', sigInst.showSignatureEdit, true);
@@ -146,10 +151,11 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 		//----------------------- drawToolsForCompose ------------
 		this.drawToolsForActiveView = function() {
 			
-			var fromSelect = sigInst.$(sigInst.gmail.getFromSelect());
+			var fromSelect = sigInst.gmail.getFromSelect();
+			fromSelect = fromSelect ? sigInst.$(fromSelect) : false;
 			var discardButton = null;
 			function getTargetWhenNoSelector() {
-			
+				
 				var toField = sigInst.gmail.getToField();
 				return toField;
 				
@@ -179,7 +185,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				wrapper.css('left', (sigInst.$(discardButton).position().left + sigInst.$(discardButton).width() + 10) + 'px');
 			}
 		
-		}
+		};
 		//---------------------- getCurrentSignature -------------
 		this.getCurrentSignature = function(callback) {
 			try {
@@ -403,15 +409,17 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 								#bcGmailSigLabelOptionsWrapper input { width:6em; }\
 							</style>\
 							<div style="width:300px; float:right; text-align:right;">\
-      							<span class="bcGmailSigsCommunityButton" id="bcGmailSigsDonateButton" title="' + bcgs.getText('donateTitle') + '">\
-							       <nobr><img src="' + bcgs.images.whiteHeart + '">' + bcgs.getText('donate') + '</nobr></span>\
-								<a href="http://www.facebook.com/pages/Blank-Canvas-Gmail-Signatures/254402756442" style="margin-left:1em;" target="_blank" title="' + bcgs.getText('followBcgsOnFacebook') + '"><img src="' + bcgs.images.facebookPage + '" style="border:none; vertical-align:middle; height:30px;"/></a>\
+      							<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6PLFFJ96DFGZN" target="_blank" class="bcGmailSigsCommunityButton" id="bcGmailSigsDonateButton" title="' + bcgs.getText('donateTitle') + '">\
+							       <nobr><img src="' + bcgs.images.whiteHeart + '">' + bcgs.getText('donate') + '</nobr></a>\
+								<a href="http://www.facebook.com/pages/Blank-Canvas-Gmail-Signatures/254402756442" style="margin-left:1em;" target="_blank" title="' + bcgs.getText('followBcgsOnFacebook') + '"><img src="' + bcgs.icons.facebook + '" style="border:none; vertical-align:middle; height:30px;"/></a>\
+								<a href="https://plus.google.com/100088243593341595846/" style="margin-left:.5em;" target="_blank" title="Follow on Google+"><img src="' + bcgs.icons.googlePlus + '" style="border:none; vertical-align:middle; height:30px;"/></a>\
+								<a href="https://twitter.com/#!/BCGmailSigs" style="margin-left:.5em;" target="_blank" title="Follow on Twitter"><img src="' + bcgs.icons.twitter + '" style="border:none; vertical-align:middle; height:30px;"/></a>\
 							</div>\
 							<a href="https://plus.google.com/100088243593341595846/about" target="_blank">\
-								<img src="' + bcgs.images.bcLogo + '" align="absmiddle" style="border:none; float:left; margin-right:1em;" />\
+								<img src="' + bcgs.images.bcLogo + '" align="absmiddle" style="border:none; float:left; width:52px; margin-right:1em;" />\
 							</a>\
 							<div style="margin-top:10px; font-size:16px;"><strong>Blank Canvas Signatures for Gmail</strong></div>\
-							<span style="font-size:11px; font-weight:normal;">' + bcgs.getText('developedBy') + ' Jerome Dane</span>\
+							<span style="font-size:11px; font-weight:normal;">' + bcgs.getText('developedBy') + ' <a href="http://profiles.google.com/JeromeDane" target="_blank">Jerome Dane</a></span>\
 							<div style="width:220px; float:right; clear:left; padding-left:20px;">\
 								<p><strong>' + bcgs.getText('usefulLinks') + '</strong></p>\
 								<ul id="bcGmailSigsLinks" style="padding-left:20px;">\
@@ -473,8 +481,12 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 									' + bcgs.getText('wheneverPossible') + '. \
 							</p>\
 							<p><strong>' + bcgs.getText('writeAReview') + '</strong> - ' + bcgs.getText('writingAReviewOnThe') + ' \
-								<a href="' + extensionPageUrl + '" target="_blank" style="color:#0033CC">' + bcgs.getText('firefoxAddonPage') + '</a> \
+								<a href="https://addons.mozilla.org/en-US/firefox/addon/blank-canvas-gmail-signatures/" target="_blank" style="color:#0033CC">' + bcgs.getText('firefoxAddonPage') + '</a> \
 								' + bcgs.getText('helpsLetOthersKnow') + '.\
+							</p>\
+							<p><strong>Help with Development</strong> - This project is open source. Fork it on \
+								<a href="https://github.com/JeromeDane/Gmail-Signatures/" target="_blank" style="color:#0033CC">GitHub</a> \
+								if you want to contribute or report bugs.\
 							</p>\
 							<p><strong><a href="http://blankcanvas.me/pages/id_133/n_donate/" target="_blank">' + bcgs.getText('makeADonation') + '</a></strong> - ' + bcgs.getText('makeADonationDetails') + '</p>\
 						</div>';
@@ -482,7 +494,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 					sigInst.$(optionsWrapper).append(td);
 				}
 				sigInst.$('form table tr:eq(0)', activeElement).after(optionsWrapper);
-				sigInst.$('#bcGmailSigsDonateButton', activeElement).click(sigInst.showDonateBox);
+				// sigInst.$('#bcGmailSigsDonateButton', activeElement).click(sigInst.showDonateBox);
 				sigInst.$('#bcGmailSigsSaveCancelButton', activeElement).click(sigInst.hideSignatureOptions);
 				sigInst.$('#bcGmailSigsSaveOptionsButton', activeElement).click(function(){
 					sigInst.saveOptions();
