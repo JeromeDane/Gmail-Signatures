@@ -56,7 +56,7 @@
 	"storageMethodDesc": { "message": "method to use for storing signatures" },
 	"storageMethodLocal": { "message": "Local" },
 	"storageMethodLocalDesc": { "message": "Store signatures in browser's local data" },
-	"storageMethodBrookmark": { "message": "Bookrmark" },
+	"storageMethodBrookmark": { "message": "Bookmark" },
 	"storageMethodBrookmarkDesc": { "message": "Store signatures in a bookmark for synchronizing across computers" },
 	"debugModeNone": { "message": "None" },
 	"debugModeJavascriptAlerts": { "message": "JavaScript alerts" },

@@ -302,9 +302,14 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				bcgs.setCharPref('label4', escape(sigInst.$('#bcGmailSigsLabel4Option', activeElement).attr('value')));
 				bcgs.setCharPref('showReinsert', sigInst.$('#bcGmailSigsReinsertButtonOption', activeElement)[0].checked ? 'true' : 'false');
 				bcgs.setCharPref('showRemove', sigInst.$('#bcGmailSigsRemoveButtonOption', activeElement)[0].checked ? 'true' : 'false');
+				bcgs.setCharPref('showFeedbackButton', sigInst.$('#bcGmailSigsFeedbackButtonOption', activeElement)[0].checked ? 'true' : 'false');
+				bcgs.setCharPref('showDonateButton', sigInst.$('#bcGmailSigsDonateButtonOption', activeElement)[0].checked ? 'true' : 'false');
 				bcgs.setCharPref('storageMethod', sigInst.$('#bcGmailSigsStorageModeOption', activeElement).attr('value'));
-				bcgs.setCharPref('debugMode', sigInst.$('#bcGmailSigsDebugModeOption', activeElement).attr('value'));
-				this.insertSignature();
+				
+				sigInst.buttonWrapper.remove();
+				sigInst.buttonWrapper = null;
+				
+				sigInst.insertSignatureAndUpdateTools();
 		}
 		//---------------------- saveSignature -----------------
 		this.saveSignature = function() {
@@ -417,7 +422,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 						td.innerHTML = '&nbsp;';
 					else {
 						td.setAttribute('style', 'padding:1em 0 .5em 0; font-size:12px;');
-						td.innerHTML = '<div style="border:1px solid ; padding:1em; background-color:#fff;">\
+						td.innerHTML = '<div style="border:1px solid #aaa; padding:1em; background-color:#fff;">\
 							<style type="text/css">\
 								.bcGmailSigsCommunityButton { -moz-border-radius:16px; margin-left:.5em; padding:.5em .8em .5em .5em; font-weight:bold; color:#fff; text-decoration:none; line-height:2em; background-image:url(' + bcgs.images.contributeButtonBg + '); border:1px solid #3493FE; text-shadow:-1px -1px 1px #196CF2; cursor:pointer; }\
 								.bcGmailSigsCommunityButton img { margin-right:.5em; border:none; vertical-align:middle; }\
@@ -439,13 +444,11 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 								<p><strong>' + bcgs.getText('usefulLinks') + '</strong></p>\
 								<ul id="bcGmailSigsLinks" style="padding-left:20px;">\
 									<li><a href="https://github.com/JeromeDane/Gmail-Signatures" target="_blank">' + bcgs.getText('projectHomePage') + '</a></li>\
-									<li><a href="http://blankcanvas.me/pages/detail/id_14/n_faq/" target="_blank">' + bcgs.getText('frequentlyAskedQuestions') + '</a></li>\
 									<li><a href="http://blankcanvas.me/pages/detail/id_12/n_html_tutorials/" target="_blank">' + bcgs.getText('htmlTutorial') + '</a></li>\
 									<li><a href="http://blankcanvas.me/pages/detail/id_13/n_templates/" target="_blank">' + bcgs.getText('signatureTemplates') + '</a></li>\
 									<li><a href="https://gmailsignatures.uservoice.com/forums/164833" target="_blank">' + bcgs.getText('forums') + '</a></li>\
 									<li><a href="https://github.com/JeromeDane/Gmail-Signatures/blob/master/changelog.txt" target="_blank">' + bcgs.getText('versionHistory') + '</a></li>\
-									<li><a href="http://blankcanvas.me/pages/detail/id_43/n_license_eula/" target="_blank">' + bcgs.getText('licenseAndUserAgreement') + '</a></li>\
-									<li><a href="http://blankcanvas.me/pages/detail/id_47/n_project_contributors/" target="_blank">' + bcgs.getText('projectContributors') + '</a></li>\
+									<li><a href="https://github.com/JeromeDane/Gmail-Signatures/blob/master/license.txt" target="_blank">' + bcgs.getText('licenseAndUserAgreement') + '</a></li>\
 								</ul>\
 							</div>\
 							<div style="margin:3em;">\
@@ -467,19 +470,16 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 								<p><strong>' + bcgs.getText('showRemoveButton') + '</strong> <input type="checkbox" id="bcGmailSigsRemoveButtonOption"' +
 									(bcgs.getPref('showRemove') == 'true' ? ' checked="checked"' : '') +
 								'/> - ' + bcgs.getText('showRemoveDesc') + '</p>\
+								<p><strong>"Feedback" Button</strong> <input type="checkbox" id="bcGmailSigsFeedbackButtonOption"' +
+									(bcgs.getPref('showFeedbackButton', 'true') == 'true' ? ' checked="checked"' : '') +
+								'/> - show menu item to submit feedback</p>\
+								<p><strong>"Donate" Button</strong> <input type="checkbox" id="bcGmailSigsDonateButtonOption"' +
+									(bcgs.getPref('showDonateButton', 'true') == 'true' ? ' checked="checked"' : '') +
+								'/> - show menu item to donate via PayPal</p>\
 								<p><strong>' + bcgs.getText('storageMethod') + '</strong> <select id="bcGmailSigsStorageModeOption">\
 										<option value="" title="' + bcgs.getText('storageMethodLocalDesc') + '">' + bcgs.getText('storageMethodLocal') + '</option>\
 										<option value="bookmark"' + (bcgs.getPref('storageMethod') == 'bookmark' ? ' selected="selected"' : '') + ' title="' + bcgs.getText('storageMethodBrookmarkDesc') + '">' + bcgs.getText('storageMethodBrookmark') + '</option>\
 									</select> - ' + bcgs.getText('storageMethodDesc') + '\
-								</p>\
-								<p><strong>' + bcgs.getText('debugMode') + '</strong> <select id="bcGmailSigsDebugModeOption">\
-										<option value="none">' + bcgs.getText('debugModeNone') + '</option>\
-										<option value="alert"' + (bcgs.getPref('debugMode') == 'alert' ? ' selected="selected"' : '') + '>' + bcgs.getText('debugModeJavascriptAlerts') + '</option>\
-									</select>\
-								</p>\
-								<p align="right" style="width:500px;">\
-									<input type="button" value="' + bcgs.getText('saveOptions') + '" id="bcGmailSigsSaveOptionsButton"/> &nbsp;\
-									<input type="button" value="' + bcgs.getText('cancel') + '" id="bcGmailSigsSaveCancelButton"/>\
 								</p>\
 							</div>\
 							<style type="text/css">\
@@ -487,26 +487,16 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 								#bcGmailSigsLinks li a { text-decoration:underline; color:#0033CC; }\
 								#bcGmailSigsLinks li a:hover { text-decoration:none; }\
 							</style>\
-							<p><span style="font-size:14px; font-weight:bold">' + bcgs.getText('promoteAndSupport') + '</span></p>\
-							<p>' + bcgs.getText('promoteAndSupportIntro') + '</p>\
-							<p><strong>' + bcgs.getText('spreadTheWord') + '</strong> - ' + bcgs.getText('spreadTheWordDetails') + ' \
-								<a href="http://blankcanvas.me/gmailsignatures/" target="_blank" style="color:#0033CC">' + bcgs.getText('projectsHomePage') + '</a>\
-									' + bcgs.getText('wheneverPossible') + '. \
-							</p>\
-							<p><strong>' + bcgs.getText('writeAReview') + '</strong> - ' + bcgs.getText('writingAReviewOnThe') + ' \
-								<a href="https://addons.mozilla.org/en-US/firefox/addon/blank-canvas-gmail-signatures/" target="_blank" style="color:#0033CC">' + bcgs.getText('firefoxAddonPage') + '</a> \
-								' + bcgs.getText('helpsLetOthersKnow') + '.\
-							</p>\
-							<p><strong>Help with Development</strong> - This project is open source. Fork it on \
-								<a href="https://github.com/JeromeDane/Gmail-Signatures/" target="_blank" style="color:#0033CC">GitHub</a> \
-								if you want to contribute or report bugs.\
-							</p>\
-							<p><strong><a href="http://blankcanvas.me/pages/id_133/n_donate/" target="_blank">' + bcgs.getText('makeADonation') + '</a></strong> - ' + bcgs.getText('makeADonationDetails') + '</p>\
-						</div>';
+						</div>\
+						<div style="text-align:right; margin-top:1em;">' + 
+							sigInst.getButtonHtml('bcGmailSigsSaveOptionsButton', bcgs.getText('saveOptions'), 'Save Signature Options') +
+							sigInst.getButtonHtml('bcGmailSigsSaveCancelButton', bcgs.getText('cancel')) +
+						'</div>';
 					}
 					sigInst.$(optionsWrapper).append(td);
 				}
 				sigInst.$('form table tr:eq(0)', activeElement).after(optionsWrapper);
+				sigInst.enableButtonMouseover();
 				// sigInst.$('#bcGmailSigsDonateButton', activeElement).click(sigInst.showDonateBox);
 				sigInst.$('#bcGmailSigsSaveCancelButton', activeElement).click(sigInst.hideSignatureOptions);
 				sigInst.$('#bcGmailSigsSaveOptionsButton', activeElement).click(function(){
@@ -564,7 +554,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 			});
 		};
 		this.getSignatureButton = function() {
-			if(typeof(sigInst.buttonWrapper) == 'undefined') {
+			if(typeof(sigInst.buttonWrapper) == 'undefined' || !sigInst.buttonWrapper) {
 				var wrapper = sigInst.gmail.createElement('div');
 				wrapper.id = 'bcSigButtonWrapper';
 				wrapper.style.display = 'inline-block';
@@ -573,7 +563,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				
 				// create button
 				var imgData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAd1JREFUeNpi/P//PwMlgAVELFq0iGRT4uLiGP0q95kxkusC79JdzZJivEVgA+bNm0e0KUlJSYwFrav+f2aSYLCz1fxPsgsc09d3KsoL51pZqXGevv8NEgbTp08naEpmZiZjauXC/wrSMgyGxsoMB659ZPj26ctfolywr4GVuf1250QJZd0kPRM1zmO3PjP8+PL177tbt7+DDZgwYQKGKQUFBYxQzUKMjMxvWTh4GK4LFDCseenN8OvrF4avd28y/Pz5LwanC4Aap4FczsTMyiBrnsIgpuXJcHF5MsP614H/tl/W/fb3z5+Mm7tzljKADEDHe+tZvC8sdvn/98d9IL73/8+X0/9/f9z7/8uzvf8PdQj/t/UsTYepZcEVzcKKlgx/Px9h+PV6CViAXTKP4dGxGQznHovNP7StayZMIRMuAwQVDBm+v9zB8OjCPQaG/+wMf3/9ZHh+efv3/CnXkpAVMmHxuzGvhLYcE/M/hodnjjJIauowsAgHMPz79wck/QtrXkADISJqzgyvb+5lUHJqYgD6lOHljdMM7+6fBicZYgzQ4hIQZ/j6+hrDjR09DB+fXnsBFNsEwk4Nv7eiKwZHY0lJCTwuRZkfMphybgBpuAbEO4CaDuJLZAABBgBp4uhVjBqx6wAAAABJRU5ErkJggg%3D%3D';
-				var buttonHtml = '<img src="' + imgData + '" style="vertical-align:middle; margin-right:3px; "/> <span class="buttonLabel">Default</span> <div class="G-asx J-J5-Ji">&nbsp;</div>';
+				var buttonHtml = '<img src="' + imgData + '" style="vertical-align:middle; margin-right:3px; "/> <span class="buttonLabel">' + unescape(bcgs.getPref('label1')) + '</span> <div class="G-asx J-J5-Ji">&nbsp;</div>';
 				var html = sigInst.getButtonHtml('bcSigSelectorButton', buttonHtml, 'Signature');
 				wrapper.append(html);
 				var button = sigInst.$('div:first', wrapper);
@@ -594,21 +584,33 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 						optionsHtml + 
 						'<div class="J-Kh" style="-webkit-user-select: none; " role="separator" id=":ug"></div>' +
 						'<div class="J-N bcSigButtonEdit" role="menuitem" title="Edit selected signature" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Edit</div></div>' +
-						'<div class="J-N bcSigButtonRemove" role="menuitem" title="Remove signature from current message" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Remove</div></div>' +
-						'<div class="J-N bcSigButtonReinsert" role="menuitem" title="Re-insert signature from into message" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Re-Insert</div></div>' +
+						(bcgs.getPref('showRemove') == 'true' ?
+							'<div class="J-N bcSigButtonRemove" role="menuitem" title="Remove signature from current message" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Remove</div></div>'
+							: ''
+						) +
+						(bcgs.getPref('showReinsert') == 'true' ?
+							'<div class="J-N bcSigButtonReinsert" role="menuitem" title="Re-insert signature from into message" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Re-Insert</div></div>'
+							: ''
+						) +
 						'<div class="J-N bcSigButtonOptions" role="menuitem" title="General signature options" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Options</div></div>' +
-						'<div class="J-N" role="menuitem" title="Give feedback about this extension" style="-webkit-user-select: none; padding-left:0; padding-right:0;"><div class="J-N-Jz" style="-webkit-user-select: none;">' +
-						'	<a href="https://gmailsignatures.uservoice.com/forums/164833" target="_blank" style="display:block; text-decoration:none; color:inherit;">' +
-						'		<img src="http://www.uservoice.com/favicon.ico/" style="height:16px; width:16px; vertical-align:middle; position:relative; top:-2px; margin-left:6px; margin-right:5px;"/>' +
-						'		Feedback' +
-						'	</a>' +
-						'</div></div>' +
-						'<div class="J-N" role="menuitem" title="Support Blank Canvas Gmail Signatures" style="-webkit-user-select: none; padding-left:0; padding-right:0;"><div class="J-N-Jz" style="-webkit-user-select: none;">' +
-						'	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6PLFFJ96DFGZN" target="_blank" style="display:block; text-decoration:none; color:inherit;">' +
-						'		<span style="padding-left: 11px; padding-right: 8px;">♥</span>' +
-						'		Donate' +
-						'	</a>' +
-						'</div></div>' +
+						(bcgs.getPref('showFeedbackButton', 'true') == 'true' ?
+							'<div class="J-N" role="menuitem" title="Give feedback about this extension" style="-webkit-user-select: none; padding-left:0; padding-right:0;"><div class="J-N-Jz" style="-webkit-user-select: none;">' +
+							'	<a href="https://gmailsignatures.uservoice.com/forums/164833" target="_blank" style="display:block; text-decoration:none; color:inherit;">' +
+							'		<img src="data:image/x-icon;base64,AAABAAIAEBAAAAAAIABoBAAAJgAAACAgAAAAACAAqBAAAI4EAAAoAAAAEAAAACAAAAABACAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByO4wkWj/RbEY71ahiP80AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYkPWVjMj7/67Y/P9Fpvn4GZP5KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGJH2rOPx/v/4/P7/isf6/xiQ82wAAAAAAAAAAAAAAAAUiesNFI/1GQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABCN9YvK5f3/3e/+/0Sm+fwZjvU0AAAAAACZ/wUWkPaKR6f49Fqx+fwakvadAP//AQAAAAAZj/UyF5H1hBSO9ZoSjfbK2Oz9/+Xy/v8xnPfqGX/lChiP9EkflPbLndD7//H4/v/8/f//gcP6/xWQ9lUXjvNYXbL5/5/R+//U6v3/0en9//////+q1vz/I5X27Tmg9+h/wvr/2+79/+j0/v/1+v7//////9zu/f8WkPWjHpP2uOj0/v/0+f7///////////////////////v9////////9fr+/93u/v/W6/3////////////0+v7/I5b3vh6T9rTQ6P3/+fz//////////////////////////////////8/o/f/x+P7/LZv3/4rH+//y+f7/9Pr+/yWW98AZj/MpJJb35djs/f/////////////////////////////////C4vz/0en9/xeR9/8bkvf/Sqn5/+n0/v8ck/avAAAAABuR80EYkPaoPqP37oXF+v/X7P3/////////////////yub9/63Y/P8Uj/f/GpL3/1yx+f/K5v3/EYz2igAAAAAAAAAAAAAAAAB//wgYj/hJGJD2rEyq+Pi43fz//v7//9rt/f/U6v3/4/H+/+Ty/v/0+v7/mM77/xWQ9lUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbkvYcE472kVWu+fnm8/7/2Oz+/////////////////1Ks+foXl/MWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWjvREYLP6/d3u/f/+/v///////97v/f8bkfa2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABqS9qm63vz/7fb+//////9fs/n+FpH2OgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXi/MWJ5f215PM+/9mtvn/FpH3fwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGI7g8YkPaWGpDyTgAAAAAAAAAAAAAAAP//AADw/wAA8P8AAPDhAADAwQAAgAAAAAAAAAAAAAAAgAAAAMAAAAD4AQAA/gEAAP+BAAD/gwAA/8cAAP/vAAAoAAAAIAAAAEAAAAABACAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAckfElGZL1oRSO9cwTjvXSEo711xmR9MgfkfI6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG4byExqS9uMpmff/VK75/1ux+f9htPn/NZ/4/xmR9OYWkPQXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAbkfRfF5H3/7fd/f////////////////+y2/z/EY73/x2T9YsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABuR9nAck/f/2Oz+/////////////////8Li/f8hlvf/G5H10gAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG5HzQxOP9/+23Pz////////////k8/7/9/v+/1Cs+f8VjvXcAH9/AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABVqgMakvUxHZL0RheT8CEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdkvAjEI32/JzQ/P///////////87o/v+63v3/KZn4/xqR9qgAAAAAAAAAAAAAAAAAAAAAAAAAAAB/fwIdkfVrF4/11BKO9/8Uj/f/E4719h2R9aAcjvESAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSP9RkQjfX3j8n7////////////qtf8/xGO9/8akPX1GY/zKQAAAAAAAAAAAAAAAAAAAAAXi/MWG5L1vhOP9/9IqPn/pNT8/8Hi/f9/wvr/GpL3/xuS9sUAktsHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG5L2VByR9UockfElG4/yOQ6M9vqUzPv//////+z2/v/s9v7/XrP5/xSN9fUYkvMVAAAAAAAAAAAAf38CG5P2VRWO9dock/f/ms/8////////////+fz///////+d0Pz/FI/3/x2S9HMAAAAAAAAAAAAAAAAdkPI+GpD2ihiR9b4WkPf/FZD3/w+M9vsNi/X3GpL3/9Hp/v//////4PD+/93v/v80n/j/GZD1uAAAAAAZjPIUHJP0XBeP9MkQjff/OaH4/7/g/f//////4vH+/+fz/v/8/f///v7///////9Urvn/FY713AB/3wgAAAAAHJP1YxaQ9/8qmvj/MJ34/3rA+v/B4f3/k8z7/4DD+//I5f3////////////j8v7/U635/wmK9v4ZkPW4FpD1uhGN9esRjvf/PqT4/57R/P/u9/7//////+Px/v/b7v7//////////////////////6PT/P8Pjfb+GpL1MQ+H8BEWjvXsT6v5/+bz/v/Y7f7/+/3///////////////////////////////////b7//99wfr/N6D4/zKd+P9Dpfj/cLv6/7bc/f/6/P//9fr//+33/v/8/v//xeT9//3+////////////////////////0On9/xqS9/8bkvRgG5L2VBaQ9//H5P3//////+Ty/v/////////////////////////////////////////////////7/f//9fr///////////////////////+43f3//f7//+Lx/v/c7/7////////////////////////////n9P7/Jpj3/xmR9HkZj/aOLpv4//X6///o9P7/7vf+////////////////////////////////////////////////////////////////////////////2Oz+/8Dh/f//////q9f8//D4/////////////////////////////+z2/v8sm/j/GZH1hBmP9o4rmvj/9/v//+Ty/v/y+f////////////////////////////////////////////////////////////////////////////+q1/z/6PT+//////9Epvj/PqP5/77g/f//////////////////////7Pb+/y2b+P8ZkPWFHpD0RRWQ9/+Ixvv/3/D+//b7////////////////////////////////////////////////////////////////////////+fz//5vP/P//////4fD+/yKW9/8Tj/f/FZD3/1mw+f/N5/3////////////p9f7/KZn4/xuR9X0Af38CHpL2pBOP9/9Epvj//v/////////////////////////////////////////////////////////////////////////k8v7/odL8//////+33f3/E4/3/x6U9/8dlPf/E4/3/xWQ9/+j0/z//////+Dw/v8hlvf/GpH1bQAAAAAAAAAAG5H1mRqS9/+MyPv/2u3+/////////////////////////////////////////////////////////////////9Do/f+13Pz//////5DK+/8Qjvf/HpT3/x6U9/8elPf/EY73/2Cz+v//////yOX9/xiR9/8ckPZTAAAAAAAAAAAckfElHJP22xKO9/8flPf/Rab5/4XF+//I5f3/+v3/////////////////////////////////////////////weH9/87o/f//////Z7f5/xKO9/8dlPf/HZT3/x6U9/8Pjff/gcP7//////+n1fz/EI32/RuS9C8AAAAAAAAAAAAAAAAAf9QGHJP0LRqS9HUWkPbED4z19xiR9/86ofj/icf7/9jt/v////////////////////////////////++4P3/3O/+//////9Pq/n/DYz3/xeR9/8Xkff/FpD3/xeR9//L5v3//////4bG+/8QjPXsG4byEwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWjvAiG5L1aReP9b4Qjfb7HZP3/1av+f+w2vz/+Pz//////////////////8bk/f/k8v7/+Pz//6HS/P/G5P3/yeX9/8vm/f/K5v3/1uv+////////////VK75/xSO9scAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByT9C0bkfWLE4324xGO9/9ApPj/rNf8//3+////////1uv+/+r1/v/z+f//xOP9/////////////////////////////////+j0/v8mmPf/G5L0jwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASku0OHJH0ZBaP9dIRjvf/San5/9Lq/f/7/f//8Pj+//L5///A4f3/////////////////////////////////tdz8/xOP9/8bkvVLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/fCByS9m4TjvXoIZX3/7Ha/P//////9Pr//73f/f////////////////////////////////9rufr/EY317BCP7xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmQ7h4YkPXMHpT3/9zu/v/9/v//t9z8////////////////////////////6vX+/yiZ+P8bkPWiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABqQ8icPjfb6dr76///////D4v3//P7///////////////////////+Sy/v/D432/h6Q8jwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByR9Zwglff/3O7+/9/v/v/p9f//////////////////5/P+/yyb+P8ZkPW4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG5L2HBSP9e9Dpfj/7fb+/9Hp/v/9/v////////////9asfn/EY72+xqS9TEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHZLzWRKO9/9YsPn/1ev+/+Py/v/n9P7/b7r6/xKO9/8dk/R7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHJH0ZBKO9vw1n/j/YrT5/zKe+P8Tj/f/HZP1hAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHZLyPRqR9bwTjvXiGJD0sRuS9UsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHJH1Sh2S9HMekPI8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////wf///4D///+Af///gH///4B///+Afwf/gPwD/4D4A+AA4AHAAAABgAAAAYAAAAEAAAAAAAAAAIAAAAGAAAABwAAAAeAAAAH8AAAB/4AAAf/gAAH//AAD//8AA///gAP//8AH///AB///4A////Af///4H////H//////" style="height:16px; width:16px; vertical-align:middle; position:relative; top:-2px; margin-left:6px; margin-right:5px;"/>' +
+							'		Feedback' +
+							'	</a>' +
+							'</div></div>'
+							: ''
+						) +
+						(bcgs.getPref('showDonateButton', 'true') == 'true' ?
+							'<div class="J-N" role="menuitem" title="Support Blank Canvas Gmail Signatures" style="-webkit-user-select: none; padding-left:0; padding-right:0;"><div class="J-N-Jz" style="-webkit-user-select: none;">' +
+							'	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6PLFFJ96DFGZN" target="_blank" style="display:block; text-decoration:none; color:inherit;">' +
+							'		<span style="padding-left: 11px; padding-right: 8px;">♥</span>' +
+							'		Donate' +
+							'	</a>' +
+							'</div></div>'
+							: ''
+						) +
 						'</div></div>');
 				var menu = sigInst.$('div:first + div', wrapper);
 				

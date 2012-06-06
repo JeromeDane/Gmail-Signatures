@@ -45,7 +45,7 @@
 				<vbox>
 					<label id="labelMostOptions" class="header"/>
 					<label value=" "/>
-					<image src="http://blankcanvasweb.com/data/wysiwyg/images/page_15_123.jpg" width="650"/>
+					<image src="https://lh5.googleusercontent.com/-B8zDQrqRz78/T8-n50nwwUI/AAAAAAAAO_k/Ao2kx3ANXJ4/s860/Untitled-1.png" width="650"/>
 					<label value=" "/>
 				</vbox>				
 			</tabpanel>
@@ -53,7 +53,7 @@
 			<tabpanel>
 				<vbox>
 					<label value=""/>
-					<label value="home page" id="labelHomePage" href="http://blankcanvasweb.com/pages/id_9/n_gmail_signatures/" class="text-link"/>
+					<label value="home page" id="labelHomePage" href="https://github.com/JeromeDane/Gmail-Signatures" class="text-link"/>
 					<label value="facebook page" id="labelFacebookPage" href="http://www.facebook.com/pages/Blank-Canvas-Gmail-Signatures/254402756442" class="text-link"/>
 					<label value="support" id="labelGetSupport" href="http://blankcanvasweb.com/forums/id_1/n_bc_gmail_signatures/" class="text-link"/>
 				</vbox>

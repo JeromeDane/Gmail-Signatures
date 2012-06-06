@@ -1,3 +1,12 @@
+version 1.18.4(b) - released June 6, 2012
+- Cleaned up and updated options window
+- Removed debug method option from options window
+- Added feedback and donate links to menu and options to hide each one
+- Signature type labels are now updated in button menu when saving general settings
+- Fixed signature button label always saying "Default" on first load instead of custom label for default type 
+- Updated page displayed in chrome when clicking traditional "options" link on extensions page 
+- Updated page displayed in Firefox when clicking traditional "options" button on addons page 
+
 version 1.18.2-3(b) - released June 5, 2012
 - Fixed button label changing to 'null' when changing from addresses
 

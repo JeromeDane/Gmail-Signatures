@@ -162,20 +162,20 @@ com.BlankCanvas.GmailSignatures = {
 				break;
 		}
 	},
-	getPref:function(key) {
+	getPref:function(key, def) {
 		var bcgs = com.BlankCanvas.GmailSignatures;
 		switch(com.BlankCanvas.BrowserDetect.browser) {
 			case 'Firefox':
 				try { return bcgs.prefs.getIntPref("extension.bcGmailSigs." + key); } catch(e) {
 					try { return bcgs.prefs.getCharPref("extension.bcGmailSigs." + key); } catch(e) {
 						try { return bcgs.prefs.getBoolPref("extension.bcGmailSigs." + key); } catch(e) {
-							return null;	
+							return typeof(def) == 'undefined' ? null : def;	
 						}
 					}
 				}
 				break;
 			case 'Chrome':
-				return typeof(localStorage['extension.bcGmailSigs.' + key]) != 'undefined' ? localStorage['extension.bcGmailSigs.' + key] : null; 
+				return typeof(localStorage['extension.bcGmailSigs.' + key]) != 'undefined' ? localStorage['extension.bcGmailSigs.' + key] : typeof(def) == 'undefined' ? null : def; 
 				break;
 		}
 	},
