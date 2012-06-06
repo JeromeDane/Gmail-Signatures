@@ -1,3 +1,18 @@
+version 1.18.2-3(b) - released June 5, 2012
+- Fixed button label changing to 'null' when changing from addresses
+
+version 1.18.1(b) - released June 5, 2012
+- Fixed glitch that caused load fail on most machines
+
+version 1.18.0(b) - released June 5, 2012
+- Improved support for Gmail through Google Apps for Domains (thanks Jon Bukiewicz)
+- Moved signature selection tools to single button with drop-down next to other Gmail message buttons
+- Added tooltips to buttons when editing signatures
+- Enabled button mouseover effect when editing signatures
+
+version 1.17.4(b) - released June 4, 2012
+- Fix to handle changes in Gmail DOM
+
 version 1.17.3(b) - released March 01, 2012
 - Fixed multiple signature tools bug
 - Fixed signature tools not showing up when not using additional from addresses

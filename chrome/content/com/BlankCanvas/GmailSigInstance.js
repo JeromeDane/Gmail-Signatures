@@ -17,11 +17,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 if(!com) { var com = {}; }
 if(!com.BlankCanvas) { com.BlankCanvas = {}; }
 
 com.BlankCanvas.GmailSigInstance = function(gmailInstance){
+	var _this = this;
 	this.debug = function(str) {
 		if(bcgs.getPref('debugMode') == 'alert') {
 			alert("com.BlankCanvas.GmailSigInstance:\n\n" + str);
@@ -29,7 +29,6 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 			throw new Error("com.BlankCanvas.GmailSigInstance:\n\n" + str);
 		}
 	}
-	try {
 		this.$ = gmailInstance.$;
 		
 		this.gmail = gmailInstance;
@@ -67,19 +66,17 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 		};
 		//----------------------- Compose Context -----------------
 		this.conversationContext = function() {
-			try {
-				sigInst.drawToolsForActiveView();
-				// insert sig
-				sigInst.insertSignature(sigInst.gmail.getFromAddress());
-				// listen for message box gone
-				sigInst.gmail.registerMessageBoxGoneHandler(sigInst.viewChange);
-				// listen for from select
-				sigInst.gmail.registerFromSelectHandler(function(fromSelect) {
-					sigInst.selectedSigType = {};	// reset selected signature type to default
-					sigInst.insertSignatureAndUpdateTools();
-					sigInst.gmail.getFromSelect().addEventListener('change', sigInst.insertSignatureAndUpdateTools, false);
-				});
-			} catch(e) { sigInst.debug("conversationContext()\n\n" + e); } 
+			sigInst.drawToolsForActiveView();
+			// insert sig
+			sigInst.insertSignature(sigInst.gmail.getFromAddress());
+			// listen for message box gone
+			sigInst.gmail.registerMessageBoxGoneHandler(sigInst.viewChange);
+			// listen for from select
+			sigInst.gmail.registerFromSelectHandler(function(fromSelect) {
+				sigInst.selectedSigType = {};	// reset selected signature type to default
+				sigInst.insertSignatureAndUpdateTools();
+				sigInst.gmail.getFromSelect().addEventListener('change', sigInst.insertSignatureAndUpdateTools, false);
+			});
 		};
 		//----------------------- drawToolsAfter -----------------
 		this.drawToolsAfter = function(elem) { 
@@ -147,10 +144,9 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				sigInst.$(elem).after(sigInst.wrappers.tools);
 				
 			});
-		}
+		};
 		//----------------------- drawToolsForCompose ------------
 		this.drawToolsForActiveView = function() {
-			
 			var fromSelect = sigInst.gmail.getFromSelect();
 			fromSelect = fromSelect ? sigInst.$(fromSelect) : false;
 			var discardButton = null;
@@ -161,12 +157,26 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				
 			}
 			switch(sigInst.gmail.getActiveViewType()) {
+				// compose view
 				case 'co':
-					var elem = fromSelect ? fromSelect : getTargetWhenNoSelector();
+					sigInst.$('div[role="navigation"]:eq(2) > div:first > .d2:eq(0)').before(
+						sigInst.getSignatureButton()
+					);
 					
-					sigInst.drawToolsAfter(elem);
+					//	var elem = fromSelect ? fromSelect : getTargetWhenNoSelector();
+					//	sigInst.drawToolsAfter(elem);
 					break;
+				// conversation
 				case 'cv':
+					
+					sigInst.$('div[role="navigation"]').each(function(i) {
+						this.id += ' SDFDSGDSGREEFGGFGDFDGDF_' + i;
+					});
+					sigInst.$('div[role="navigation"]:eq(2) > div:first + div > .d2:eq(0)').before(
+						sigInst.getSignatureButton()
+					);
+					/*
+				
 					if(fromSelect)
 						sigInst.drawToolsAfter(fromSelect);
 					else {
@@ -174,6 +184,7 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 						var elem = fromHiddenInput.size() == 1 ? fromHiddenInput : getTargetWhenNoSelector();
 						sigInst.drawToolsAfter(elem);
 					}
+					* */
 					break;
 			}
 			// implement fix for Chrome selector not expanding bug
@@ -184,58 +195,69 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				wrapper.css('top', (sigInst.$(discardButton).position().top + 2) + 'px');
 				wrapper.css('left', (sigInst.$(discardButton).position().left + sigInst.$(discardButton).width() + 10) + 'px');
 			}
+			sigInst.enableButtonMouseover();
 		
 		};
 		//---------------------- getCurrentSignature -------------
 		this.getCurrentSignature = function(callback) {
-			try {
+			
 				bcgs.getSignature(sigInst.getCurrentSignatureKey(), function(sig) {
 					callback(sig);
 				});				
-			} catch(e) {
-				sigInst.debug("drawToolsForActiveView()\n\n" + e); 
-			}
-		}
+		};
 		//---------------------- getCurrentSignature -------------
 		this.getCurrentSignatureKey = function() {
-			try {
-				var selector = sigInst.$('#bcGmailSigsSigTypeSelector', sigInst.gmail.getActiveElement());
-				var index = selector.size() == 1 ? selector[0].selectedIndex : 0;
+			
+				var index = typeof(sigInst.selectedSigType[sigInst.gmail.getFromAddress()]) != 'undefined' ? sigInst.selectedSigType[sigInst.gmail.getFromAddress()] : 0;
+				if(typeof(index) == 'undefined') {
+					index = 0;
+				}				
 				var sigVersion = index == 0 ? '' : index + 1;
 				return sigInst.gmail.getFromAddress() + sigVersion.toString();
-			} catch(e) { sigInst.debug("getCurrentSignatureKey()\n\n" + e); }
-		}
+		};
 		//---------------------- hideSignatureEdit -------------
 		this.hideDonationBox = function() {
-			try {
+			
 				var activeElement = sigInst.gmail.getActiveElement();
 				sigInst.$('#bcGmailSigsDonateWrapper', activeElement).remove();
-			} catch(e) { sigInst.debug("hideDonationBox()\n\n" + e); }
-		}
+		};
 		//---------------------- hideSignatureEdit -------------
 		this.hideSignatureEdit = function() {
-			try {
+			
 				var activeElement = sigInst.gmail.getActiveElement();
 				sigInst.$('#bcGmailSigsEditWrapper', activeElement).remove();
-			} catch(e) { sigInst.debug("hideSignatureEdit()\n\n" + e); }
-		}
+		};
 		//---------------------- hideSignatureOptions -------------
 		this.hideSignatureOptions = function() {
-			try {
+			
 				var activeElement = sigInst.gmail.getActiveElement();
 				sigInst.$('#bcGmailSigsOptionsWrapper', activeElement).remove();
 				sigInst.hideDonationBox();
-			} catch(e) { sigInst.debug("hideSignatureOptions()\n\n" + e); }
-		}
+		};
 		//---------------------- insertSignature -----------------
 		this.insertSignatureAndUpdateTools = function() {
 			sigInst.drawToolsForActiveView();
 			sigInst.insertSignature();
 			sigInst.updateSignatureEditBox();
-		}
+			
+			// update button label
+			var i = typeof(sigInst.selectedSigType[sigInst.gmail.getFromAddress()]) != 'undefined' ? sigInst.selectedSigType[sigInst.gmail.getFromAddress()] + 1 : 1;	
+			sigInst.$('.buttonLabel', sigInst.buttonWrapper).text(unescape(bcgs.getPref('label' + i)) );
+			
+			// update button menu items 
+			sigInst.$('.bcSigSelectType', sigInst.buttonWrapper).css('font-weight', 'normal');
+			sigInst.$('.bcSigSelectType:eq(' + (i - 1) + ')', sigInst.buttonWrapper).css('font-weight', 'bold');
+			sigInst.$('.bcSigSelectType', sigInst.buttonWrapper).each(function(indx) {
+				this.className = this.className.replace(/\s*J-Ks-KO/, '');
+				if(i - 1 == indx) {
+					this.className += ' J-Ks-KO';
+				}
+			});			
+			
+		};
 		//---------------------- insertSignature -----------------
 		this.insertSignature = function() {
-			try {
+			
 				// create wrapper
 				var messageIframe = sigInst.gmail.getMessageIframe(); 
 				if (messageIframe) {
@@ -254,22 +276,21 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 						} else if (existingSig.size() == 0) sigInst.$(messageElement).append(newSig);	
 					});
 				}
-			} catch(e) { sigInst.debug("insertSignature()\n\n" + e); }
-		}
+		};
 		//---------------------- insertSignature -----------------
 		this.removeSignature = function() {
-			//try {
+			//
 				var messageIframe = sigInst.gmail.getMessageIframe(); 
 				var messageElement = messageIframe.contentDocument.body;
 				var key = com.BlankCanvas.md5(sigInst.gmail.getPrimaryEmailAddress()).match(/^.{10}/)[0];
 				var existingSig = sigInst.$('div[name="sig_' + key + '"]', messageElement);
 				if(existingSig.size() > 0)
 					existingSig.remove();
-			//} catch(e) { sigInst.debug("removeSignature()\n\n" + e); }
-		}
+			//} catch(e) { console.log("removeSignature()\n\n" + e); }
+		};
 		//---------------------- saveOptions ------------------
 		this.saveOptions = function() {
-			try {			
+						
 				var activeElement = sigInst.gmail.getActiveElement();
 				var oldPosition = bcgs.getPref('sigPosition');
 				var newPosition = sigInst.$('#bcGmailSigsSigPositionOption', activeElement).attr('value'); 
@@ -284,21 +305,19 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				bcgs.setCharPref('storageMethod', sigInst.$('#bcGmailSigsStorageModeOption', activeElement).attr('value'));
 				bcgs.setCharPref('debugMode', sigInst.$('#bcGmailSigsDebugModeOption', activeElement).attr('value'));
 				this.insertSignature();
-			} catch(e) { sigInst.debug("saveOptions()\n\n" + e); }
 		}
 		//---------------------- saveSignature -----------------
 		this.saveSignature = function() {
-			try {
+			
 				var activeElement = sigInst.gmail.getActiveElement();
 				bcgs.saveSignature(sigInst.getCurrentSignatureKey(), sigInst.$('#bcGmailSigsEditSig', activeElement).attr('value'), function() {
 					sigInst.hideSignatureEdit();
 					sigInst.insertSignatureAndUpdateTools();
 				});
-			} catch(e) { sigInst.debug("saveSignature()\n\n" + e); }
 		}
 		//---------------------- showDonateBox ------------------
 		this.showDonateBox = function() {
-			try {
+			
 				var wrapper = sigInst.gmail.createElement('div')
 				wrapper.id = 'bcGmailSigsDonateWrapper';
 				wrapper.setAttribute('style', 'z-index:3000; position:fixed; top:50px; left:0; width:100%;');
@@ -332,15 +351,11 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				sigInst.$('#bcGmailSigsDonateForm', activeElement).submit(function() {
 					setTimeout(sigInst.hideDonationBox, 1000);
 				});
-			} catch(e) { sigInst.debug("showDonateBox()\n\n" + e); }
-		}
+		};
 		//---------------------- showSignatureEdit -------------
 		this.showSignatureEdit = function() {
-			function getButtonHtml(id, text) {
-				return '<div id="' + id + '" class="T-I J-J5-Ji Bq T-I-ax7 L3" tabindex="2" style="-webkit-user-select: none; font-size:12px;" role="button">' + text + '</div>';
-			}
-			//var sigInst = this;
-			try {
+			var getButtonHtml =  sigInst.getButtonHtml;
+			
 				sigInst.getCurrentSignature(function(currentSig) {
 					sigInst.hideSignatureEdit();
 					sigInst.hideSignatureOptions();
@@ -355,10 +370,10 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 							td.setAttribute('style', 'padding:1em 0 .5em 0; font-size:12px;');
 							var html = '<strong>' + bcgs.getText('signatureHtmlCode') + ':</strong> &nbsp;&nbsp; (' + bcgs.getText('dontKnowHtml') + ' <a href="http://blankcanvas.me/pages/detail/id_12/n_html_tutorials/" target="_blank">' + bcgs.getText('clickHereForTutorial') + '</a>)\
 									<textarea id="bcGmailSigsEditSig" style="width:100%; height:200px; padding:.2em; font:small Arial,sans-serif; border:1px solid #979797; margin-top:.2em;"></textarea>\
-									<div style="margin:.5em 0; text-align:right;">' +
-										getButtonHtml("bcGmailSigsSaveSigButton", bcgs.getText('saveSignature')) +
-										(currentSig != '' ? getButtonHtml("bcGmailSigsDeleteSigButton", bcgs.getText('deleteSignature')) : '') +
-										getButtonHtml("bcGmailSigsCancelSigEditButton", bcgs.getText('cancelChanges')) +
+									<div style="margin:.5em 0; text-align:right;" role="navigation">' +
+										sigInst.getButtonHtml("bcGmailSigsSaveSigButton", 'Save', 'Save Current Signature') +
+										(currentSig != '' ? sigInst.getButtonHtml("bcGmailSigsDeleteSigButton", 'Delete', 'Delete Current Signature') : '') +
+										sigInst.getButtonHtml("bcGmailSigsCancelSigEditButton", 'Cancel', 'Cancel Changes') +
 									'</div>\
 									<div style="margin-top:-2em;"><strong>' + bcgs.getText('signaturePreview') + ':</strong></div>\
 									<iframe id="bcGmailSigsPreviewFrame" style="border:none; width:100%; height:125px; padding:0; background-color:inherit;"/>';
@@ -379,12 +394,12 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 					sigInst.$('#bcGmailSigsSaveSigButton', activeElement).click(sigInst.saveSignature);
 					sigInst.$('#bcGmailSigsPreviewFrame', activeElement).load(sigInst.updateSignaturePreview);
 					sigInst.updateSignatureEditBox();
+					sigInst.enableButtonMouseover();
 				});
-			} catch(e) { sigInst.debug("showSignatureEdit()\n\n" + e); }
 		}
 		//---------------------- showSignatureOptions -------------
 		this.showSignatureOptions = function() {
-			try {
+			
 				var extensionPageUrl = "";
 				var browser = com.BlankCanvas.BrowserDetect.browser;
 				switch(browser) {
@@ -423,14 +438,12 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 							<div style="width:220px; float:right; clear:left; padding-left:20px;">\
 								<p><strong>' + bcgs.getText('usefulLinks') + '</strong></p>\
 								<ul id="bcGmailSigsLinks" style="padding-left:20px;">\
-									<li><a href="http://blankcanvas.me/gmailsignatures/" target="_blank">' + bcgs.getText('projectHomePage') + '</a></li>\
-									<li><a href="http://blankcanvas.me/pages/detail/id_15/n_getting_started/" target="_blank">' + bcgs.getText('gettingStartedGuide') + '</a></li>\
+									<li><a href="https://github.com/JeromeDane/Gmail-Signatures" target="_blank">' + bcgs.getText('projectHomePage') + '</a></li>\
 									<li><a href="http://blankcanvas.me/pages/detail/id_14/n_faq/" target="_blank">' + bcgs.getText('frequentlyAskedQuestions') + '</a></li>\
 									<li><a href="http://blankcanvas.me/pages/detail/id_12/n_html_tutorials/" target="_blank">' + bcgs.getText('htmlTutorial') + '</a></li>\
 									<li><a href="http://blankcanvas.me/pages/detail/id_13/n_templates/" target="_blank">' + bcgs.getText('signatureTemplates') + '</a></li>\
-									<li><a href="http://blankcanvas.me/forums/id_1/n_bc_gmail_signatures/" target="_blank">' + bcgs.getText('forums') + '</a></li>\
-									<li><a href="http://blankcanvas.me/pages/detail/id_11/n_known_bugs/" target="_blank">' + bcgs.getText('knownBugs') + '</a></li>\
-									<li><a href="http://blankcanvas.me/pages/detail/id_10/n_version_history/" target="_blank">' + bcgs.getText('versionHistory') + '</a></li>\
+									<li><a href="https://gmailsignatures.uservoice.com/forums/164833" target="_blank">' + bcgs.getText('forums') + '</a></li>\
+									<li><a href="https://github.com/JeromeDane/Gmail-Signatures/blob/master/changelog.txt" target="_blank">' + bcgs.getText('versionHistory') + '</a></li>\
 									<li><a href="http://blankcanvas.me/pages/detail/id_43/n_license_eula/" target="_blank">' + bcgs.getText('licenseAndUserAgreement') + '</a></li>\
 									<li><a href="http://blankcanvas.me/pages/detail/id_47/n_project_contributors/" target="_blank">' + bcgs.getText('projectContributors') + '</a></li>\
 								</ul>\
@@ -506,11 +519,9 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 				if (com.BlankCanvas.BrowserDetect.browser != 'Firefox')	
 					sigInst.$('#bcGmailSigsStorageModeOption').parent().hide();
 				*/
-			} catch(e) { sigInst.debug("showSignatureOptions()\n\n" + e); }
 		}
 		//---------------------- updateSignatureEditBox -------------
 		this.updateSignatureEditBox = function() {
-			try {
 				var activeElement = sigInst.gmail.getActiveElement();
 				var editBox = sigInst.$('#bcGmailSigsEditSig', activeElement);
 				if(editBox.size() == 1) {
@@ -527,22 +538,144 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 						sigInst.updateSignaturePreview();
 					});		
 				}
-			} catch(e) { sigInst.debug("updateSignatureEditBox()\n\n" + e); }
+			
 		}
 		//---------------------- updateSignaturePreview -------------
 		this.updateSignaturePreview = function() {
-			try {
-				var activeElement = sigInst.gmail.getActiveElement();
-				var html = sigInst.$('#bcGmailSigsEditSig', activeElement).attr('value');
-				var iframe = sigInst.$('#bcGmailSigsPreviewFrame', activeElement);
-				if(iframe.size() == 1) {
-					var iframeBody = iframe[0].contentDocument.body; 
-					iframeBody.setAttribute('style', 'font-family:Arial,sans-serif; font-size:small; padding:.75em 0 0;');
-					iframeBody.innerHTML = html;
+			var activeElement = sigInst.gmail.getActiveElement();
+			var html = sigInst.$('#bcGmailSigsEditSig', activeElement).attr('value');
+			var iframe = sigInst.$('#bcGmailSigsPreviewFrame', activeElement);
+			if(iframe.size() == 1) {
+				var iframeBody = iframe[0].contentDocument.body; 
+				iframeBody.setAttribute('style', 'font-family:Arial,sans-serif; font-size:small; padding:.75em 0 0;');
+				iframeBody.innerHTML = html;
+			}
+		};
+		this.getButtonHtml = function(id, text, tooltip) {
+			var ttHtml = typeof(tooltip) == 'undefined' ? '' : ' aria-label="' + tooltip + '" aria-haspopup="true" data-tooltip="' + tooltip + '"';
+			return '<div id="' + id + '" class="T-I J-J5-Ji Bq lX T-I-ax7 L3 bcGmailButton" role="button" tabindex="2" style="-webkit-user-select: none; " ' + ttHtml + '>' + text + '</div>';
+		};
+		this.enableButtonMouseover = function() {
+			sigInst.$('.bcGmailButton').mouseover(function() {
+				this.className += ' T-I-JW';
+			});
+			sigInst.$('.bcGmailButton').mouseout(function() {
+				this.className = this.className.replace(/\s*T-I-JW/, '');
+			});
+		};
+		this.getSignatureButton = function() {
+			if(typeof(sigInst.buttonWrapper) == 'undefined') {
+				var wrapper = sigInst.gmail.createElement('div');
+				wrapper.id = 'bcSigButtonWrapper';
+				wrapper.style.display = 'inline-block';
+				wrapper.style.position = 'relative';
+				wrapper = sigInst.$(wrapper);
+				
+				// create button
+				var imgData = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAd1JREFUeNpi/P//PwMlgAVELFq0iGRT4uLiGP0q95kxkusC79JdzZJivEVgA+bNm0e0KUlJSYwFrav+f2aSYLCz1fxPsgsc09d3KsoL51pZqXGevv8NEgbTp08naEpmZiZjauXC/wrSMgyGxsoMB659ZPj26ctfolywr4GVuf1250QJZd0kPRM1zmO3PjP8+PL177tbt7+DDZgwYQKGKQUFBYxQzUKMjMxvWTh4GK4LFDCseenN8OvrF4avd28y/Pz5LwanC4Aap4FczsTMyiBrnsIgpuXJcHF5MsP614H/tl/W/fb3z5+Mm7tzljKADEDHe+tZvC8sdvn/98d9IL73/8+X0/9/f9z7/8uzvf8PdQj/t/UsTYepZcEVzcKKlgx/Px9h+PV6CViAXTKP4dGxGQznHovNP7StayZMIRMuAwQVDBm+v9zB8OjCPQaG/+wMf3/9ZHh+efv3/CnXkpAVMmHxuzGvhLYcE/M/hodnjjJIauowsAgHMPz79wck/QtrXkADISJqzgyvb+5lUHJqYgD6lOHljdMM7+6fBicZYgzQ4hIQZ/j6+hrDjR09DB+fXnsBFNsEwk4Nv7eiKwZHY0lJCTwuRZkfMphybgBpuAbEO4CaDuJLZAABBgBp4uhVjBqx6wAAAABJRU5ErkJggg%3D%3D';
+				var buttonHtml = '<img src="' + imgData + '" style="vertical-align:middle; margin-right:3px; "/> <span class="buttonLabel">Default</span> <div class="G-asx J-J5-Ji">&nbsp;</div>';
+				var html = sigInst.getButtonHtml('bcSigSelectorButton', buttonHtml, 'Signature');
+				wrapper.append(html);
+				var button = sigInst.$('div:first', wrapper);
+				
+				var optionsHtml = '';
+				for(var i = 1; i < 5; i++) {
+					if(typeof(sigInst.selectedSigType) == 'undefined') {
+						var selectedTypeIndex = 0;
+					} else {
+						var selectedTypeIndex = typeof(sigInst.selectedSigType[sigInst.gmail.getFromAddress()]) != 'undefined' ? sigInst.selectedSigType[sigInst.gmail.getFromAddress()] : 0;
+					}
+					var isSelected = i == selectedTypeIndex + 1; 
+					optionsHtml += '<div class="bcSigSelectType J-N' + (isSelected ? ' J-Ks-KO' : '') + '" id="bcSelectSigType' + i + '"' + (isSelected ? ' style="font-weight:bold;"' : '') + '>' + unescape(bcgs.getPref('label' + i)) + '</div>';
 				}
-			} catch(e) { sigInst.debug("updateSignaturePreview()\n\n" + e); }
-		}
+				
+				wrapper.append('<div class="J-M asi jQjAxd" style="position:absolute; top:29px; right:16px; -webkit-user-select: none; visibility: visible; display: none; " role="menu" aria-haspopup="true"><div class="SK AX" style="-webkit-user-select: none; ">' +
+						'<div class="J-awr" style="-webkit-user-select: none; ">Select Signature:</div>' +
+						optionsHtml + 
+						'<div class="J-Kh" style="-webkit-user-select: none; " role="separator" id=":ug"></div>' +
+						'<div class="J-N bcSigButtonEdit" role="menuitem" title="Edit selected signature" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Edit</div></div>' +
+						'<div class="J-N bcSigButtonRemove" role="menuitem" title="Remove signature from current message" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Remove</div></div>' +
+						'<div class="J-N bcSigButtonReinsert" role="menuitem" title="Re-insert signature from into message" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Re-Insert</div></div>' +
+						'<div class="J-N bcSigButtonOptions" role="menuitem" title="General signature options" style="-webkit-user-select: none; "><div class="J-N-Jz" style="-webkit-user-select: none; ">Options</div></div>' +
+						'<div class="J-N" role="menuitem" title="Give feedback about this extension" style="-webkit-user-select: none; padding-left:0; padding-right:0;"><div class="J-N-Jz" style="-webkit-user-select: none;">' +
+						'	<a href="https://gmailsignatures.uservoice.com/forums/164833" target="_blank" style="display:block; text-decoration:none; color:inherit;">' +
+						'		<img src="http://www.uservoice.com/favicon.ico/" style="height:16px; width:16px; vertical-align:middle; position:relative; top:-2px; margin-left:6px; margin-right:5px;"/>' +
+						'		Feedback' +
+						'	</a>' +
+						'</div></div>' +
+						'<div class="J-N" role="menuitem" title="Support Blank Canvas Gmail Signatures" style="-webkit-user-select: none; padding-left:0; padding-right:0;"><div class="J-N-Jz" style="-webkit-user-select: none;">' +
+						'	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=6PLFFJ96DFGZN" target="_blank" style="display:block; text-decoration:none; color:inherit;">' +
+						'		<span style="padding-left: 11px; padding-right: 8px;">♥</span>' +
+						'		Donate' +
+						'	</a>' +
+						'</div></div>' +
+						'</div></div>');
+				var menu = sigInst.$('div:first + div', wrapper);
+				
+				// enable option mouseover
+				sigInst.$('.J-N', wrapper).mouseover(function() {
+					this.className += ' J-N-JT';
+				});
+				sigInst.$('.J-N', wrapper).mouseout(function() {
+					this.className = this.className.replace(/\s*J-N-JT/, '');
+				});
+				
+				// show edit sig on click
+				sigInst.$('.bcSigButtonEdit', menu).click(function() {
+					menu.hide();
+					sigInst.showSignatureEdit();
+				});
+				
+				// remove sig options on click
+				sigInst.$('.bcSigButtonRemove', menu).click(function() {
+					menu.hide();
+					sigInst.removeSignature();
+				});
+				
+				// remove sig options on click
+				sigInst.$('.bcSigButtonReinsert', menu).click(function() {
+					menu.hide();
+					sigInst.insertSignature();
+				});
+				
+				// show sig options on click
+				sigInst.$('.bcSigButtonOptions', menu).click(function() {
+					menu.hide();
+					sigInst.showSignatureOptions();
+				});
+				
+				// show menu on button click
+				button.click(function(e) {
+					menu.show();
+					// prevent document click so menu doesn't immediately close
+					e.stopPropagation();
+				});
+				
+				// prevent click event on document itself
+				menu.click(function(e) {
+					e.stopPropagation();
+				});
+				
+				// hide menu when clicking anywhere else
+				sigInst.$("body").click(function() {
+					menu.hide();
+				});
+				
+				sigInst.$('.bcSigSelectType', menu).click(function() {
+					menu.hide();
+					var i = parseInt(this.id.match(/\d+$/)[0]) - 1;
+					sigInst.selectedSigType[sigInst.gmail.getFromAddress()] = i;
+					sigInst.insertSignatureAndUpdateTools();
+				});
+				
+				sigInst.buttonWrapper = wrapper;
+			}
+			
+			return sigInst.buttonWrapper;
+			
+		};
+		this.selectedSigType = {};
 		// register view change handler
 		this.gmail.registerViewChangeCallback(sigInst.viewChange);
-	} catch(e) { this.debug(e); }
+			
 }

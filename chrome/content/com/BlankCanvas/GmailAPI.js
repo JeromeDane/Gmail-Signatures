@@ -42,49 +42,47 @@ if(!com.BlankCanvas) { com.BlankCanvas = {} }
 
 com.BlankCanvas.GmailAPI = {
 	registerGmailHandler:function(callback) {
-		try {
-			function handlePageLoad(unsafeWin) {
-				try {
-					if (unsafeWin.document.location.toString().match(/mail\.google\.com/)) { // if in gmail
-						com.BlankCanvas.jQuery.init(function(jq){
-							try {
-								// check for in gmail canvas (main) frame
-								var body = unsafeWin.document.getElementsByTagName('body')[0];
-								var canvas = jq("iframe#canvas_frame", body);
-								if (canvas.size() == 1) {
-									function listenForLoadComplete(){
-										try {
-											// check for standard gmail window
-											if (typeof(canvas[0].contentDocument) != 'undefined' && jq('a[href*=/terms.html]', canvas[0].contentDocument).size() > 0) {
-												//canvas = canvas[0].contentDocument;
-												var gmailInstance = new com.BlankCanvas.GmailAPI.gmailInstance(unsafeWin, jq);
-												gmailInstance.document = canvas[0].contentDocument;
-												callback(gmailInstance);
-											} else if(typeof(canvas[0].contentDocument) != 'undefined' && jq('#gb', canvas[0].contentDocument).size() == 0 && jq('iframe', canvas[0].contentDocument).size() == 1) {	
-												// check for tear out
-												var gmailInstance = new com.BlankCanvas.GmailAPI.gmailInstance(unsafeWin, jq, true);
-												gmailInstance.document = canvas[0].contentDocument;
-												callback(gmailInstance);
-											}
-											else 
-												setTimeout(listenForLoadComplete, 300);
-										} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad() > listenForPageComplete()'); }
-									}
-									listenForLoadComplete();
+		function handlePageLoad(unsafeWin) {
+			try {
+				if (unsafeWin.document.location.toString().match(/mail\.google\.com/)) { // if in gmail
+					com.BlankCanvas.jQuery.init(function(jq){
+						try {
+							// check for in gmail canvas (main) frame
+							var body = unsafeWin.document.getElementsByTagName('body')[0];
+							var canvas = jq("iframe#canvas_frame", body);
+							if (canvas.size() == 1) {
+								function listenForLoadComplete(){
+									try {
+										// check for standard gmail window
+										if (typeof(canvas[0].contentDocument) != 'undefined' && jq('a[href*=/terms.html]', canvas[0].contentDocument).size() > 0) {
+											//canvas = canvas[0].contentDocument;
+											var gmailInstance = new com.BlankCanvas.GmailAPI.gmailInstance(unsafeWin, jq);
+											gmailInstance.document = canvas[0].contentDocument;
+											callback(gmailInstance);
+										} else if(typeof(canvas[0].contentDocument) != 'undefined' && jq('#gb', canvas[0].contentDocument).size() == 0 && jq('iframe', canvas[0].contentDocument).size() == 1) {	
+											// check for tear out
+											var gmailInstance = new com.BlankCanvas.GmailAPI.gmailInstance(unsafeWin, jq, true);
+											gmailInstance.document = canvas[0].contentDocument;
+											callback(gmailInstance);
+										}
+										else 
+											setTimeout(listenForLoadComplete, 300);
+									} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad() > listenForPageComplete()'); }
 								}
-							} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad() > com.BlankCanvas.jQuery.init(function() { ... }'); }
-						});
-					}
-				} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad()'); }
-			}
-			switch (com.BlankCanvas.BrowserDetect.browser) {
-				case 'Firefox':
-					com.BlankCanvas.FirefoxUnsafeWindow.registerPageLoadListener(handlePageLoad);
-					break;
-				default:
-					handlePageLoad(window);
-			}
-		} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler()'); }
+								listenForLoadComplete();
+							}
+						} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad() > com.BlankCanvas.jQuery.init(function() { ... }'); }
+					});
+				}
+			} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad()'); }
+		}
+		switch (com.BlankCanvas.BrowserDetect.browser) {
+			case 'Firefox':
+				com.BlankCanvas.FirefoxUnsafeWindow.registerPageLoadListener(handlePageLoad);
+				break;
+			default:
+				handlePageLoad(window);
+		}
 	},
 	gmailInstance:function(unsafeWin, jq, isTearOut) {
 		//alert('creating gmail inst');
@@ -105,7 +103,7 @@ com.BlankCanvas.GmailAPI = {
 		//-------------------------- create element ------------------------------
 		this.createElement = function(type) {
 			return this.unsafeWin.document.createElement(type);
-		} 
+		};
 		//-------------------------- debug output -------------------------------
 		this.debug = function(str) {
 			function getFunctionName(fnct) {
@@ -221,17 +219,19 @@ com.BlankCanvas.GmailAPI = {
 				gmailInstance.numErrors = 0;
 			try {		
 				if(gmailInstance.numErrors < 4 && (typeof(gmailInstance.mainElementWrapper) == 'undefined' || gmailInstance.mainElementWrapper.size() == 0)) {
-					// The following is used during development to mark divs for easy debugging
-					// it helps find an instance of a relatively uncommon class name to use
-					// as a starting point for identifying the main element wrapper
-					/*
-					gmailInstance.$('div.oLaOvc').each(function(i) {
-						this.id = 'bcGmailWrapperParentTest' + i;
-					});
-					 */
 					
-					gmailInstance.mainElementWrapper = gmailInstance.$('div.oLaOvc:eq(0) > div:first > div.nH:first');
+					// NOTE ===========================
+					//
+					// This is the part Google always screws up by changging the dom. Try to find div[role="main"] and point at its parent
+					//
+					// ====================================
 					
+					gmailInstance.mainElementWrapper = gmailInstance.$('.oy8Mbf:eq(5) + div div:eq(3) + div div:eq(2)');
+					
+									
+					// check for older versions of Gmail (depreciated)
+					if (gmailInstance.mainElementWrapper.size() == 0)
+						gmailInstance.mainElementWrapper = gmailInstance.$('div.oLaOvc:eq(0) > div:first > div.nH:first');
 					// check for older versions of Gmail (depreciated)
 					if (gmailInstance.mainElementWrapper.size() == 0) {
 						var subSelectStr =  ' div:first div:first + div.nH div:first';
@@ -249,12 +249,15 @@ com.BlankCanvas.GmailAPI = {
 					// check for chat on right labs feature in even older Gmail version (depreciated)
 					if (gmailInstance.mainElementWrapper.size() == 0)
 						gmailInstance.mainElementWrapper = gmailInstance.$('div:first div:first + table td:eq(0) + td + td div:first + div div:eq(3) + div div:first div:eq(3) + div div:first');
+
 					gmailInstance.mainElementWrapper[0].id = 'bcGmailMainElementWrapper';
 				}
 				return gmailInstance.mainElementWrapper[0];				
 			} catch(e) {
 				gmailInstance.numErrors++;
-				gmailInstance.debug("getMainElement()\n\n" + e);
+				console.log(gmailInstance.numErrors + ' errors');
+				console.log(e.getMessage());
+			//	console.log("getMainElement()\n\n" + e);
 			}
 		}
 		//----------------------- getMessageBoxText -----------------
@@ -320,10 +323,10 @@ com.BlankCanvas.GmailAPI = {
 							else
 								gmailInstance.unsafeWin.setTimeout(checkForFromSelect, 500);
 						}
-					} catch(e) { gmailInstance.debug("registerFromSelectHandler()\n\n" + e); }
+					} catch(e) { console.log("registerFromSelectHandler()\n\n" + e); }
 				}
 				checkForFromSelect();	
-			} catch(e) { gmailInstance.debug("registerFromSelectHandler()\n\n" + e); }		
+			} catch(e) { console.log("registerFromSelectHandler()\n\n" + e); }		
 		}
 		//-------------------------- registerMessageBoxHandler ------------------
 		this.registerMessageBoxHandler = function(callback) {
@@ -359,7 +362,7 @@ com.BlankCanvas.GmailAPI = {
 						else
 							gmailInstance.unsafeWin.setTimeout(checkForMessageBoxGone, 500);
 					}
-				} catch(e) { gmailInstance.debug("registerMessageBoxGoneHandler()\n\n" + e); }
+				} catch(e) { console.log("registerMessageBoxGoneHandler()\n\n" + e); }
 			}
 			checkForMessageBoxGone();			
 		}
@@ -383,7 +386,7 @@ com.BlankCanvas.GmailAPI = {
 							callback();
 						}
 					}
-				} catch(e) { gmailInstance.debug("registerViewChangeCallback()\n\n" + e); }
+				} catch(e) { console.log("registerViewChangeCallback()\n\n" + e); }
 			}, 500);
 		}
 		//-------------------------- setMessageBoxText -----------------
@@ -395,7 +398,7 @@ com.BlankCanvas.GmailAPI = {
 			} catch(e) {
 				this.debug("setMessageText()\n\n" + e);
 			}	
-		}
+		};
 		//-------------------------- stopListeningForElements -----------------
 		this.stopListeningForElements = function() {
 			this.listeningForFromSelect = false;
@@ -403,4 +406,4 @@ com.BlankCanvas.GmailAPI = {
 			this.listeningForMessageBoxGone = false;
 		}
 	}
-}
+};
