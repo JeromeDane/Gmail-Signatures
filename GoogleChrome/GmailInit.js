@@ -18,6 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This is the bootstrap file for Google Chrome */
+
 if(!com) { var com = {} }
 if(!com.BlankCanvas) { com.BlankCanvas = {} }
 
@@ -25,7 +27,9 @@ $ = getJqueryInstance();
 
 window.addEventListener("load", function() {
 	com.BlankCanvas.GmailSignatures.init(function() { 
+		// console.log('com.BlankCanvas.GmailSignatures.init executed');
 		function gmailResult(gmailInstance) {
+			console.log('com.BlankCanvas.GmailAPI.registerGmailHandler() completed');
 			var sigInstance = new com.BlankCanvas.GmailSigInstance(gmailInstance);
 		}
 		com.BlankCanvas.GmailAPI.registerGmailHandler(gmailResult);

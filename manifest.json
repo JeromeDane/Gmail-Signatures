@@ -1,23 +1,28 @@
 {
 "update_url":"http://clients2.google.com/service/update2/crx",
+	"manifest_version": 2,
 	"name": "__MSG_extName__",
 	"permissions": [
-		"bookmarks"
+		"bookmarks",
+		"background"
 	],
 	"default_locale": "en",
-	"version": "1.18.4",
+	"version": "1.18.5",
 	"description": "__MSG_extDesc__",
 	"options_page": "GoogleChrome/options.html",
 	"icons": { 
 		"48": "chrome/skin/icon48.png",
 		"128": "chrome/skin/icon128.png" 
 	},
-	"background_page": "GoogleChrome/background.html",
+	"background": {
+		"scripts": ["GoogleChrome/background.js"],
+		"persistent": true
+	},
 	"content_scripts": [
 		{
 	      	"matches": ["http://mail.google.com/*", "https://mail.google.com/*"],
 			"run_at": "document_start",
-			"all_frames": true,
+			"all_frames": false,
 	      	"js": [
 				"chrome/content/com/BlankCanvas/BrowserDetect.js",
 				"chrome/content/com/jQuery/jquery.min.js",

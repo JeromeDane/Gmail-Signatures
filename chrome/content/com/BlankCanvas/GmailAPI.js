@@ -42,39 +42,53 @@ if(!com.BlankCanvas) { com.BlankCanvas = {} }
 
 com.BlankCanvas.GmailAPI = {
 	registerGmailHandler:function(callback) {
+		console.log('com.BlankCanvas.GmailAPI.registerGmailHandler called'); 
 		function handlePageLoad(unsafeWin) {
+			console.log('com.BlankCanvas.GmailAPI.registerGmailHandler in running handlePageLoad'); 
 			try {
 				if (unsafeWin.document.location.toString().match(/mail\.google\.com/)) { // if in gmail
 					com.BlankCanvas.jQuery.init(function(jq){
 						try {
 							// check for in gmail canvas (main) frame
 							var body = unsafeWin.document.getElementsByTagName('body')[0];
-							var canvas = jq("iframe#canvas_frame", body);
+							
+							// Gmail got rid of the iframe, so just use the body if no iframe is found
+							var canvas = jq("iframe#canvas_frame", body);	
+							if(canvas.size() == 0) {						
+								canvas = jq(body);
+							}
+							
 							if (canvas.size() == 1) {
+								var doc = typeof(canvas[0].contentDocument) != 'undefined' ? canvas[0].contentDocument : canvas;
 								function listenForLoadComplete(){
+									console.log('listenForLoadComplete ...');
 									try {
 										// check for standard gmail window
-										if (typeof(canvas[0].contentDocument) != 'undefined' && jq('a[href*=/terms.html]', canvas[0].contentDocument).size() > 0) {
+										if (jq('a[href*="/terms.html"]', doc).size() > 0) {
 											//canvas = canvas[0].contentDocument;
+											
+											console.log('regular window found and loaded (terms.html link found)');
 											var gmailInstance = new com.BlankCanvas.GmailAPI.gmailInstance(unsafeWin, jq);
-											gmailInstance.document = canvas[0].contentDocument;
+											gmailInstance.document = doc;
 											callback(gmailInstance);
-										} else if(typeof(canvas[0].contentDocument) != 'undefined' && jq('#gb', canvas[0].contentDocument).size() == 0 && jq('iframe', canvas[0].contentDocument).size() == 1) {	
+										} else if(jq('iframe.editable', doc).size() == 1) {
 											// check for tear out
 											var gmailInstance = new com.BlankCanvas.GmailAPI.gmailInstance(unsafeWin, jq, true);
-											gmailInstance.document = canvas[0].contentDocument;
+											gmailInstance.document = doc;
+											console.log()
+											console.log('loaded popup window');
 											callback(gmailInstance);
 										}
 										else 
 											setTimeout(listenForLoadComplete, 300);
-									} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad() > listenForPageComplete()'); }
+									} catch(e) { console.log(e); com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad() > listenForPageComplete()'); }
 								}
 								listenForLoadComplete();
 							}
-						} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad() > com.BlankCanvas.jQuery.init(function() { ... }'); }
+						} catch(e) {  console.log(e); com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad() > com.BlankCanvas.jQuery.init(function() { ... }'); }
 					});
 				}
-			} catch(e) { com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad()'); }
+			} catch(e) { console.log(e); com.BlankCanvas.GmailSignatures.debug(e, 'com.BlankCanvas.GmailAPI.registerGmailHandler() > handlePageLoad()'); }
 		}
 		switch (com.BlankCanvas.BrowserDetect.browser) {
 			case 'Firefox':

@@ -18,6 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* This is the bootstrap file for Firefox */
+
 if(!com) { var com = {} }
 if(!com.BlankCanvas) { com.BlankCanvas = {} }
 
@@ -30,3 +32,5 @@ window.addEventListener("load", function() {
 	}
 	com.BlankCanvas.GmailSigsLoader();
 }, false);
+
+console.log('overlay');

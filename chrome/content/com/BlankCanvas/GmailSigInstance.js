@@ -21,8 +21,10 @@ if(!com) { var com = {}; }
 if(!com.BlankCanvas) { com.BlankCanvas = {}; }
 
 com.BlankCanvas.GmailSigInstance = function(gmailInstance){
+	console.log('gmail inst');
 	var _this = this;
 	this.debug = function(str) {
+		console.log(str);
 		if(bcgs.getPref('debugMode') == 'alert') {
 			alert("com.BlankCanvas.GmailSigInstance:\n\n" + str);
 		} else {
@@ -443,10 +445,8 @@ com.BlankCanvas.GmailSigInstance = function(gmailInstance){
 							<div style="width:220px; float:right; clear:left; padding-left:20px;">\
 								<p><strong>' + bcgs.getText('usefulLinks') + '</strong></p>\
 								<ul id="bcGmailSigsLinks" style="padding-left:20px;">\
-									<li><a href="https://github.com/JeromeDane/Gmail-Signatures" target="_blank">' + bcgs.getText('projectHomePage') + '</a></li>\
-									<li><a href="http://blankcanvas.me/pages/detail/id_12/n_html_tutorials/" target="_blank">' + bcgs.getText('htmlTutorial') + '</a></li>\
-									<li><a href="http://blankcanvas.me/pages/detail/id_13/n_templates/" target="_blank">' + bcgs.getText('signatureTemplates') + '</a></li>\
-									<li><a href="https://gmailsignatures.uservoice.com/forums/164833" target="_blank">' + bcgs.getText('forums') + '</a></li>\
+									<li><a href="https://github.com/JeromeDane/Gmail-Signatures/blob/master/readme.md" target="_blank">' + bcgs.getText('projectHomePage') + '</a></li>\
+									<li><a href="https://github.com/JeromeDane/Gmail-Signatures/issues" target="_blank">Issues / Bugs</a></li>\
 									<li><a href="https://github.com/JeromeDane/Gmail-Signatures/blob/master/changelog.txt" target="_blank">' + bcgs.getText('versionHistory') + '</a></li>\
 									<li><a href="https://github.com/JeromeDane/Gmail-Signatures/blob/master/license.txt" target="_blank">' + bcgs.getText('licenseAndUserAgreement') + '</a></li>\
 								</ul>\

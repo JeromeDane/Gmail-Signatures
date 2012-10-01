@@ -1,3 +1,10 @@
+version 1.18.5 (Chrome only)- released October 1, 2012
+- Updated to manifest v2 for compliance with Chrome Web Store
+- Fixes to handle Gmail no longer running in an iFrame
+- Currently broken in popout mode due to recent changes in Gmail
+- Updated project home page and issues links to point to GitHub
+- Minor performance improvements due to less polling in various iFrames
+
 version 1.18.4(b) - released June 6, 2012
 - Cleaned up and updated options window
 - Removed debug method option from options window
