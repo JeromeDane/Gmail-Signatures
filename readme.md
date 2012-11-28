@@ -1,4 +1,4 @@
-*NO LONGER BEING MAINTAINED.* I can't keep up with the changes in Gmail. Feel free to create your own version of this extension using my code (https://github.com/JeromeDane/Gmail-Signatures), but please give credit to my work with a link.
+**NO LONGER BEING MAINTAINED.** I can't keep up with the changes in Gmail. Feel free to create your own version of this extension using my code (https://github.com/JeromeDane/Gmail-Signatures), but please give credit to my work with a link.
 
 Blank Canvas Signatures for Gmail
 ============================
