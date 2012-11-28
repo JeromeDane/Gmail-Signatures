@@ -20,6 +20,8 @@
 
 /* This is the bootstrap file for Firefox */
 
+
+
 if(!com) { var com = {} }
 if(!com.BlankCanvas) { com.BlankCanvas = {} }
 

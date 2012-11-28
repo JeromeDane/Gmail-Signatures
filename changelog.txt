@@ -1,3 +1,9 @@
+version 1.18.6(b) - released October 1, 2012
+- Updated feedback link in dropbox menu to point to github
+- Tested release for Firefox
+- Updated project home page and support links in Firefox options window link tab
+- Updated "Let me know" support link in Chrome options window
+
 version 1.18.5 (Chrome only)- released October 1, 2012
 - Updated to manifest v2 for compliance with Chrome Web Store
 - Fixes to handle Gmail no longer running in an iFrame

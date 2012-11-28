@@ -5,6 +5,7 @@
 	"permissions": [
 		"bookmarks",
 		"background"
+<<<<<<< HEAD
 	],
 	"default_locale": "en",
 	"version": "1.18.6",
@@ -14,6 +15,17 @@
 		"48": "chrome/skin/icon48.png",
 		"128": "chrome/skin/icon128.png" 
 	},
+=======
+	],
+	"default_locale": "en",
+	"version": "1.18.7",
+	"description": "__MSG_extDesc__",
+	"options_page": "GoogleChrome/options.html",
+	"icons": { 
+		"48": "chrome/skin/icon48.png",
+		"128": "chrome/skin/icon128.png" 
+	},
+>>>>>>> Closed project
 	"background": {
 		"scripts": ["GoogleChrome/background.js"],
 		"persistent": true
